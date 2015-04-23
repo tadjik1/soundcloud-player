@@ -4,7 +4,7 @@ import TilesStore from '../../stores/tiles';
 
 export default class HomePage extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -18,7 +18,6 @@ export default class HomePage extends Component {
   };
 
   render() {
-
     return (
       <div className="clearfix">
         <h1 className="tac title">
