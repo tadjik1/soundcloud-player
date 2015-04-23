@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers Chrome",
     "build": "node build.js",
     "start": "node dev-server.js"
   },
@@ -17,6 +17,7 @@
     "babel-runtime": "^5.1.11",
     "chai": "^2.2.0",
     "chai-as-promised": "^5.0.0",
+    "jsdom": "^5.1.0",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
@@ -24,7 +25,6 @@
     "karma-mocha": "^0.1.10",
     "karma-mocha-reporter": "^1.0.2",
     "karma-notify-reporter": "^0.1.1",
-    "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon": "^1.0.4",
     "karma-webpack": "^1.5.0",
     "mocha": "^2.2.4",

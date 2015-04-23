@@ -1,5 +1,15 @@
+import React from 'react/addons';
+import Footer from '../footer';
+
+const TestUtils = React.addons.TestUtils;
+
+
 describe('it\'s an example of tests suite', () => {
   it('should be truth', () => {
-    expect(2 + 2).to.equal(4);
+
+    var Component = TestUtils.renderIntoDocument(React.createElement(Footer));
+
+    TestUtils.findRenderedDOMComponentWithTag(Component, 'footer');
+
   });
 });

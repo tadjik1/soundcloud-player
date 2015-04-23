@@ -6,9 +6,8 @@ module.exports = function (config) {
       'chai',
       'sinon'
     ],
-    'browsers': ['PhantomJS'],
+    'browsers': ['Chrome'],
     'files': [
-      './utilities/phantomjs-shim.js',
       'scripts/**/__tests__/*.js'
     ],
     'preprocessors': {
@@ -26,7 +25,7 @@ module.exports = function (config) {
       'karma-chai-as-promised',
       'karma-chai',
       'karma-sinon',
-      'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-coverage',
       'karma-notify-reporter'
@@ -45,6 +44,13 @@ module.exports = function (config) {
         'filename': 'index.js'
       },
       'module': {
+        'preLoaders': [
+          {
+            'test': /\.js/,
+            'exclude': /(__tests__|node_modules)/,
+            'loader': 'isparta-instrumenter-loader'
+          }
+        ],
         'loaders': [
           {
             'test': /\.js/,
