@@ -1,36 +1,29 @@
 import React from 'react';
 
 export default class Tiles extends React.Component {
-  render () {
-    var tiles = [
-      {
-        link: '/search',
-        text: 'Search',
-        img: '/img/search.jpg'
-      },
-      {
-        link: '/users',
-        text: 'User list',
-        img: '/img/users.jpg'
-      }
-    ];
 
-    var tilesRendered = tiles.map((tile) => {
+  render () {
+
+    var tilesRendered = this.props.tiles.map((tile) => {
       return (
-        <a href={tile.link}>
-          <img src={tile.img} />
-          <div>
-            {tile.text}
-          </div>
-        </a>
+        <div className="col-sm-6 col-md-6">
+          <a className="tile" href={tile.link}>
+            <img className="tile--img" src={tile.img} />
+            <div className="tile--description">
+              {tile.text}
+            </div>
+          </a>
+        </div>
       );
     });
 
     return (
-      <div>
+      <div className="col-md-6 col-md-offset-3">
         {tilesRendered}
       </div>
     );
   }
 }
+
+Tiles.defaultProps = { tiles: [] };
 

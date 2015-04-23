@@ -5,3 +5,34 @@ body {
   padding-top: 50px;
   padding-bottom: 20px;
 }
+
+.tac {
+  text-align: center;
+}
+
+.tile {
+  display: block;
+}
+
+.tile--img {
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 75px;
+}
+
+.tile--description {
+  text-align: center;
+}
+
+.title {
+  margin: 60px 0 40px;
+}
+
+.description {
+  font-size: 125%;
+  line-height: 1.7em;
+  margin-bottom: 50px;
+}

@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Tiles from '../../components/tiles';
+import TilesStore from '../../stores/tiles';
 
 export default class HomePage extends React.Component {
+
+  constructor () {
+    super();
+
+    this.state = {
+      tiles: TilesStore.getTiles()
+    };
+  }
+
   render() {
+
     return (
-      <div>
-        <h1>
+      <div className="clearfix">
+        <h1 className="tac title">
           SoundCloud Replica
         </h1>
-        <div>
+        <div className="col-md-8 col-md-offset-2 description tac">
           This is an attempt to build robust software inspired by Flux ideology.
           It has a typical stack consisting of facebook React, Dispatcher and basic concept of 
           Stores and Action Lists.
@@ -16,7 +27,7 @@ export default class HomePage extends React.Component {
           And, of course, it uses Babel for all ES6 and even ES7 (async/await in particular) 
           and WebPack as development environment.
         </div>
-        <Tiles />
+        <Tiles tiles={this.state.tiles} />
       </div>
     );
   }
