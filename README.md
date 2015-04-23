@@ -1,5 +1,8 @@
 ##Javascript audio player + equalizer
 
+[![Build Status](https://travis-ci.org/tadjik1/soundcloud-player.svg?branch=master)](https://travis-ci.org/tadjik1/soundcloud-player)
+[![Coverage Status](https://coveralls.io/repos/tadjik1/soundcloud-player/badge.svg)](https://coveralls.io/r/tadjik1/soundcloud-player)
+
 ```bash
 git clone https://github.com/tadjik1/soundcloud-player.git
 cd soundcloud-player
