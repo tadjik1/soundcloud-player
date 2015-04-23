@@ -1,4 +1,4 @@
-var _data = {};
+let _data = {};
 
 _data.tiles = [
       {
@@ -17,4 +17,4 @@ export default {
   getTiles: () => {
     return _data.tiles;
   }
-}
+};

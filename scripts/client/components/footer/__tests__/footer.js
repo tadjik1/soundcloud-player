@@ -1,3 +1,5 @@
+/* global describe, it */
+
 import React from 'react/addons';
 import Footer from '../footer';
 

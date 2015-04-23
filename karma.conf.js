@@ -6,7 +6,7 @@ module.exports = function (config) {
       'chai',
       'sinon'
     ],
-    'browsers': ['Chrome'],
+    'browsers': ['Firefox'],
     'files': [
       'scripts/**/__tests__/*.js'
     ],
@@ -25,14 +25,17 @@ module.exports = function (config) {
       'karma-chai-as-promised',
       'karma-chai',
       'karma-sinon',
-      'karma-chrome-launcher',
+      'karma-firefox-launcher',
       'karma-mocha-reporter',
       'karma-coverage',
       'karma-notify-reporter'
     ],
     'coverageReporter': {
-      type: 'html',
-      dir: 'coverage/'
+      dir: 'coverage/',
+      reporters: [
+        {type: 'html', subdir: 'report-html'},
+        {type: 'lcov', subdir: 'report-lcov'}
+      ]
     },
     'webpack': {
       'entry': './scripts/client/index.js',

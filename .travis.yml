@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - iojs
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+after_script:
+  - node node_modules/lcov-filter/index.js ./coverage/report-lcov/lcov.info config | ./node_modules/coveralls/bin/coveralls.js

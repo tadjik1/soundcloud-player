@@ -4,19 +4,26 @@ var path = require('path');
 
 module.exports = {
   devtool: 'source-map',
-  entry: {
-    app: ['./scripts/client/index.js']
-  },
+  entry: [
+    './scripts/client/index.js'
+  ],
   output: {
     path: __dirname + '/build',
     filename: 'client.js'
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }
+    ],
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
     ]
   }
