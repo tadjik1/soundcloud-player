@@ -1,17 +1,22 @@
 import React from 'react';
+import Tiles from '../../components/tiles';
 
-export default class Navbar extends React.Component {
+export default class HomePage extends React.Component {
   render() {
     return (
-      <div className="jumbotron">
-        <div className="container">
-          <h1>Hello, world!</h1>
-
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a
-            jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-
-          <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+      <div>
+        <h1>
+          SoundCloud Replica
+        </h1>
+        <div>
+          This is an attempt to build robust software inspired by Flux ideology.
+          It has a typical stack consisting of facebook React, Dispatcher and basic concept of 
+          Stores and Action Lists.
+          By its functionality it's pretty similar to SoundCloud and has some it's pages, that's it.
+          And, of course, it uses Babel for all ES6 and even ES7 (async/await in particular) 
+          and WebPack as development environment.
         </div>
+        <Tiles />
       </div>
     );
   }
