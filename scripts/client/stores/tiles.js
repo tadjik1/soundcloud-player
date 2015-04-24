@@ -1,20 +1,31 @@
-let _data = {};
+import EventEmmiter from 'eventemitter3';
+import { Set } from 'immutable';
 
-_data.tiles = [
-      {
-        link: '/search',
-        text: 'Search',
-        img: '/assets/img/search.jpg'
-      },
-      {
-        link: '/profile',
-        text: 'Your profile',
-        img: 'assets/img/profile.png'
-      }
-    ];
+const data = Symbol();
 
-export default {
-  getTiles: () => {
-    return _data.tiles;
+class TilesStore {
+  constructor() {
+    Object.assign(this, new EventEmmiter());
+
+    this[data] = {
+      tiles: new Set([
+        {
+          link: '/search',
+          text: 'Search',
+          img: '/assets/img/search.jpg'
+        },
+        {
+          link: '/profile',
+          text: 'Your profile',
+          img: 'assets/img/profile.png'
+        }
+      ])
+    };
+  };
+
+  getTiles() {
+    return this[data].tiles;
   }
-};
+}
+
+export default new TilesStore();
