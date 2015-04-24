@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint ./scripts && ./node_modules/karma/bin/karma start --single-run --browsers Firefox",
+    "test:watch": "./node_modules/karma/bin/karma start --browsers Firefox",
     "build": "node build.js",
     "start": "node dev-server.js",
     "lint": "eslint ./scripts"

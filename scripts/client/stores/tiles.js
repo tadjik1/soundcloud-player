@@ -25,7 +25,7 @@ class TilesStore {
 
   getTiles() {
     return this[data].tiles;
-  }
+  };
 }
 
 export default new TilesStore();

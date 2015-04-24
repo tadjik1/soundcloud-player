@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
+import { Link } from 'react-router';
 
-export default class Navbar extends React.Component {
+export default class Navbar extends Component {
+  static propTypes = {
+    path: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  };
+
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">
-        <div className="container">
+        <div className="container-fluid">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
@@ -13,21 +19,25 @@ export default class Navbar extends React.Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Project name</a>
+            <Link className="navbar-brand" to="/">SoundCloud Replica</Link>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
-            <form className="navbar-form navbar-right">
-              <div className="form-group">
-                <input type="text" placeholder="Email" className="form-control" />
-              </div>
-              <div className="form-group">
-                <input type="password" placeholder="Password" className="form-control" />
-              </div>
-              <button type="submit" className="btn btn-success">Sign in</button>
-            </form>
+            <ul className="nav navbar-nav">
+              <li>
+                <Link to="/search">Search</Link>
+              </li>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+            </ul>
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
     );
-  }
+  };
 }

@@ -68,7 +68,6 @@ module.exports = function (config) {
           '.js'
         ]
       }
-    },
-    singleRun: true
+    }
   });
 };

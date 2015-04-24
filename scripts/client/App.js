@@ -8,8 +8,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
-        <RouteHandler {...this.props} key={this.props.pathname}/>
+        <div className="container-fluid">
+          <NavBar {...this.props} />
+          <RouteHandler {...this.props} key={this.props.pathname}/>
+        </div>
         <Footer/>
       </div>
     );
