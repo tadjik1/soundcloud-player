@@ -1,6 +1,6 @@
 /* global describe, it */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Addons from 'react/addons';
 import stubRouterContext from '../test-stub/stubRouterContext';
 import NavBar from '../navbar';

@@ -1,24 +1,24 @@
 //https://github.com/rackt/react-router/blob/master/docs/guides/testing.md
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 export default function(Component, props, stubs) {
   function RouterStub() { }
 
   Object.assign(RouterStub, {
-    makePath () {},
-    makeHref () {},
-    transitionTo () {},
-    replaceWith () {},
-    goBack () {},
-    getCurrentPath () {},
-    getCurrentRoutes () {},
-    getCurrentPathname () {},
-    getCurrentParams () {},
-    getCurrentQuery () {},
-    isActive () {},
+    makePath() {},
+    makeHref() {},
+    transitionTo() {},
+    replaceWith() {},
+    goBack() {},
+    getCurrentPath() {},
+    getCurrentRoutes() {},
+    getCurrentPathname() {},
+    getCurrentParams() {},
+    getCurrentQuery() {},
+    isActive() {},
     getRouteAtDepth() {},
     setRouteComponentAtDepth() {}
-  }, stubs)
+  }, stubs);
 
   return React.createClass({
     childContextTypes: {
@@ -26,15 +26,15 @@ export default function(Component, props, stubs) {
       routeDepth: React.PropTypes.number
     },
 
-    getChildContext () {
+    getChildContext() {
       return {
         router: RouterStub,
         routeDepth: 0
       };
     },
 
-    render () {
-      return <Component {...props} />
+    render() {
+      return <Component {...props} />;
     }
   });
-};
+}
