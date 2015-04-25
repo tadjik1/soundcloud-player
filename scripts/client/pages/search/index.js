@@ -1,24 +1,42 @@
 import React from 'react';
 import TrackActions from '../../actions/TrackActions';
 import UserActions from '../../actions/UserActions';
+import TracksStore from '../../stores/tracks';
+import UsersStore from '../../stores/users';
+
+let getStateFromStores = () => {
+  return {
+    tracks: TracksStore.getAllTracks(),
+    users: UsersStore.getAllUsers()
+  };
+};
 
 export default class SearchPage extends React.Component {
-
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = Object.assign({
       query: ''
-    };
+    }, getStateFromStores());
+  };
+
+  componentDidMount() {
+    TracksStore.addChangeListener(this._onChange.bind(this));
+    UsersStore.addChangeListener(this._onChange.bind(this));
+  };
+
+  componentWillUnmount() {
+    TracksStore.removeChangeListener(this._onChange.bind(this));
+    UsersStore.removeChangeListener(this._onChange.bind(this));
   };
 
   doSearch(event) {
-    event.preventDefault();
-
     let query = this.state.query;
 
     TrackActions.search(query);
     UserActions.search(query);
+
+    event.preventDefault();
   };
 
   handleChange(event) {
@@ -42,5 +60,9 @@ export default class SearchPage extends React.Component {
         </div>
       </div>
     );
+  };
+
+  _onChange() {
+    this.setState(getStateFromStores());
   };
 }

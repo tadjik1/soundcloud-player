@@ -1,11 +1,11 @@
-import EventEmmiter from 'eventemitter3';
 import { Set } from 'immutable';
+import Store from './Store';
 
 const data = Symbol();
 
-class TilesStore {
+class TilesStore extends Store {
   constructor() {
-    Object.assign(this, new EventEmmiter());
+    super();
 
     this[data] = {
       tiles: new Set([
