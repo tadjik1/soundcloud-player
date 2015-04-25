@@ -32,12 +32,12 @@ export default class SearchPage extends React.Component {
     return (
       <div className="search">
         <div className="jumbotron">
-          <form>
+          <form onSubmit={this.doSearch.bind(this)}>
             <div className="form-group">
               <label htmlFor="query">Search:</label>
               <input type="text" className="form-control" value={query} onChange={this.handleChange.bind(this)} id="query" placeholder="Enter your query" />
             </div>
-            <button type="submit" className="btn btn-default" onClick={this.doSearch.bind(this)}>Submit</button>
+            <button type="submit" className="btn btn-default">Submit</button>
           </form>
         </div>
       </div>
