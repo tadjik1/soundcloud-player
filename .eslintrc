@@ -10,7 +10,8 @@
   },
   "globals": {
     "async": true,
-    "await": true
+    "await": true,
+    "SC": true
   },
   "ecmaFeatures": {
     "arrowFunctions": true,

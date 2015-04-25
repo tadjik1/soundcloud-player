@@ -69,3 +69,11 @@ body {
 .container .text-muted {
   margin: 20px 0;
 }
+
+/* Search Page styles */
+/* -------------------------------------------------- */
+
+.search {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}

@@ -20,6 +20,10 @@ router.run((Handler, state) => {
 // export for http://fb.me/react-devtools
 window.React = React;
 
+SC.initialize({
+  client_id: '8245587a488fdb47747133be16133e4f'
+});
+
 document.onclick = event => {
   let el = event.target;
 

@@ -2,8 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import Tiles from '../../components/tiles';
 import TilesStore from '../../stores/tiles';
 
-import PlaylistActions from '../../actions/PlaylistActions';
-
 export default class HomePage extends Component {
 
   constructor(props) {

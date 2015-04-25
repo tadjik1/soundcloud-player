@@ -1,6 +1,13 @@
+let defaultParams = {
+  limit: 10
+};
+
 export default {
-  async get(path) {
-    console.log(path);
-    return [{a: 1}, {b: 2}];
+  async get(path, options = {}) {
+    return new Promise((resolve) => {
+      SC.get(path, Object.assign({}, defaultParams, options), (res) => {
+        resolve(res);
+      });
+    });
   }
 };

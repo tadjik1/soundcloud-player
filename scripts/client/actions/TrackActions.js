@@ -3,13 +3,12 @@ import SoundCloudApiUtils from '../utils/SoundCloudApiUtils';
 import { ActionTypes } from '../constants/SoundCloudAppConstants';
 
 export default {
-  async getPlaylistsByUser(userId) {
-    let playlists = await SoundCloudApiUtils.getPlaylistsByUser(userId);
+  async search(query) {
+    let tracks = await SoundCloudApiUtils.searchTracks(query);
 
     SoundCloudAppDispatcher.dispatch({
-      type: ActionTypes.RECEIVE_PLAYLISTS,
-      playlists: playlists,
-      userId: userId
+      type: ActionTypes.RECEIVE_TRACKS,
+      tracks: tracks
     });
   }
 };
