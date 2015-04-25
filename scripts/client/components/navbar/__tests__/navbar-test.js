@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Addons from 'react/addons';
-import stubRouterContext from '../test-stub/stubRouterContext';
+import stubRouterContext from './fixtures/stubRouterContext';
 import NavBar from '../navbar';
 
 const TestUtils = Addons.addons.TestUtils;

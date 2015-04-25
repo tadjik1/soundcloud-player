@@ -8,10 +8,10 @@ module.exports = function (config) {
     ],
     'browsers': ['Firefox'],
     'files': [
-      'scripts/**/__tests__/*.js'
+      'scripts/client/**/*-test.js'
     ],
     'preprocessors': {
-      'scripts/**/__tests__/*.js': ['webpack']
+      'scripts/client/**/*-test.js': ['webpack']
     },
     'webpackMiddleware': {'noInfo': true},
     'reporters': [
