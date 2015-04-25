@@ -8,6 +8,10 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "async": true,
+    "await": true
+  },
   "ecmaFeatures": {
     "arrowFunctions": true,
     "blockBindings": true,

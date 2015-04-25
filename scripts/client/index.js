@@ -17,6 +17,9 @@ router.run((Handler, state) => {
   );
 });
 
+// export for http://fb.me/react-devtools
+window.React = React;
+
 document.onclick = event => {
   let el = event.target;
 

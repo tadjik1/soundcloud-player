@@ -46,7 +46,9 @@
   "dependencies": {
     "bootstrap": "^3.3.4",
     "eventemitter3": "^1.0.1",
+    "flux": "^2.0.1",
     "immutable": "^3.7.2",
+    "keymirror": "^0.1.1",
     "react": "^0.13.2",
     "react-router": "^0.13.2"
   }
