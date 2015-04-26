@@ -68,6 +68,9 @@ module.exports = function (config) {
           '.js'
         ]
       }
-    }
+    },
+    //sometime firefox runs very slow - it can takes 20-30 seconds
+    //so set this parameter to 100 seconds
+    browserNoActivityTimeout: 100000
   });
 };

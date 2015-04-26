@@ -1,6 +1,6 @@
 import React from 'react';
 import TrackActions from '../../actions/TrackActions';
-import UserActions from '../../actions/UserActions';
+import UsersActions from '../../actions/UsersActions';
 import TracksStore from '../../stores/tracks/tracks';
 import UsersStore from '../../stores/users/users';
 
@@ -34,7 +34,7 @@ export default class SearchPage extends React.Component {
     let query = this.state.query;
 
     TrackActions.search(query);
-    UserActions.search(query);
+    UsersActions.search(query);
 
     event.preventDefault();
   };
@@ -70,16 +70,6 @@ export default class SearchPage extends React.Component {
             <button type="submit" className="btn btn-default">Submit</button>
           </form>
         </div>
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-        </table>
       </div>
     );
   };

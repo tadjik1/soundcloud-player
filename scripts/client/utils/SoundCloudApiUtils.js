@@ -11,5 +11,9 @@ export default {
 
   async searchUsers(query) {
     return await SoundCloudSdk.get('/users', { q: query });
+  },
+
+  async authenticate() {
+    return await SoundCloudSdk.authenticate();
   }
 };
