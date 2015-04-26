@@ -1,5 +1,5 @@
 import { Set } from 'immutable';
-import Store from './Store';
+import Store from '../Store';
 
 const data = Symbol();
 

@@ -1,13 +1,17 @@
 import React from 'react';
-import TrackActions from '../../actions/TrackActions';
-import UserActions from '../../actions/UserActions';
-import TracksStore from '../../stores/tracks';
-import UsersStore from '../../stores/users';
+
+// actions section
+import SearchStore from '../../stores/search/';
+
+// components section
+import SearchControls from '../../components/search-controls';
+import SearchResults from '../../components/search-results';
 
 let getStateFromStores = () => {
   return {
-    tracks: TracksStore.getAllTracks(),
-    users: UsersStore.getAllUsers()
+    queryParams: SearchStore.getQueryParams(),
+    type: SearchStore.getType(),
+    results: SearchStore.getResults()
   };
 };
 
@@ -15,49 +19,25 @@ export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({
-      query: ''
-    }, getStateFromStores());
+    this.state = getStateFromStores();
   };
 
   componentDidMount() {
-    TracksStore.addChangeListener(this._onChange.bind(this));
-    UsersStore.addChangeListener(this._onChange.bind(this));
+    SearchStore.addChangeListener(this._onChange.bind(this));
   };
 
   componentWillUnmount() {
-    TracksStore.removeChangeListener(this._onChange.bind(this));
-    UsersStore.removeChangeListener(this._onChange.bind(this));
-  };
-
-  doSearch(event) {
-    let query = this.state.query;
-
-    TrackActions.search(query);
-    UserActions.search(query);
-
-    event.preventDefault();
-  };
-
-  handleChange(event) {
-    this.setState({
-      query: event.target.value
-    });
+    SearchStore.removeChangeListener(this._onChange.bind(this));
   };
 
   render() {
-    let query = this.state.query;
+    let state = this.state;
+    let type = state.type;
+
     return (
       <div className="search">
-        <div className="jumbotron">
-          <form onSubmit={this.doSearch.bind(this)}>
-            <div className="form-group">
-              <label htmlFor="query">Search:</label>
-              <input type="text" className="form-control" value={query} onChange={this.handleChange.bind(this)} id="query" placeholder="Enter your query" />
-            </div>
-            <button type="submit" className="btn btn-default">Submit</button>
-          </form>
-        </div>
+        <SearchControls type={type} queryParams={state.queryParams[type]} />
+        <SearchResults type={type} results={state.results} />
       </div>
     );
   };
