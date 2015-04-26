@@ -5,8 +5,7 @@ import UserActions from '../../../../actions/UserAction';
 let getUserInfo = () => {
   return {
     isLogin: UserStore.isLogin(),
-    userName: UserStore.get('username'),
-    userAvatar: UserStore.get('avatar_url')
+    userName: UserStore.get('username')
   };
 };
 

@@ -3,14 +3,17 @@ import { ActionTypes } from '../../constants/SoundCloudAppConstants';
 import Store from '../Store';
 
 const data = Symbol();
+const StorageKey = 'oauth_token';
 
 class UserStore extends Store {
   constructor() {
     super();
 
     this[data] = {
-      isLogin: false,
-      user: {}
+      isLogin: localStorage.getItem(StorageKey) ? true : false,
+      user: {
+        username: localStorage.getItem('username')
+      }
     };
   };
 
@@ -30,12 +33,16 @@ userStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
     case ActionTypes.USER_LOGIN:
       userStore[data].isLogin = true;
       userStore[data].user = action.user;
+      localStorage.setItem(StorageKey, SC.accessToken());
+      localStorage.setItem('username', action.user.username);
       userStore.emitChange();
       break;
 
     case ActionTypes.USER_LOGOUT:
       userStore[data].isLogin = false;
       userStore[data].user = {};
+      localStorage.removeItem(StorageKey);
+      localStorage.removeItem('username');
       userStore.emitChange();
       break;
 
