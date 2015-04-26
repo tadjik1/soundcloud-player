@@ -1,6 +1,6 @@
 import React from 'react';
-import UserStore from '../../../../stores/user';
-import UserActions from '../../../../actions/UserAction';
+import UserStore from 'stores/user';
+import UserActions from 'actions/UserAction';
 
 let getUserInfo = () => {
   return {
@@ -24,17 +24,14 @@ export default class LoginComponent extends React.Component {
     UserStore.removeChangeListener(this._onChange.bind(this));
   };
 
-  handleClick(event) {
+  handleClick() {
     if (this.state.isLogin) return true;  //if already login just redirect to profile page
 
-    //I have no idea, but it doesn't work. I don't wanna redirect user to login page - it's unnecessary.
-    event.preventDefault();
-    event.stopPropagation();
     UserActions.doLogin();
   };
 
   render() {
-    let href = this.state.isLogin ? '/profile' : '/login';
+    let href = this.state.isLogin ? '/profile' : '#';
     let title = this.state.isLogin ? this.state.userName : 'Login';
     return (
       <li>

@@ -26,5 +26,9 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
+  },
+  resolve: {
+    root: path.resolve(__dirname, './scripts/client'),
+    extensions: ['', '.js']
   }
 };

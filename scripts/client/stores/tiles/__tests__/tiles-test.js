@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 
-import TilesStore from '../tiles';
+import TilesStore from '../index';
 import { Set } from 'immutable';
 
 describe('tiles store basic interface', () => {

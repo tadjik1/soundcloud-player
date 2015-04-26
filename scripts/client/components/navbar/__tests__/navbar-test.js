@@ -3,7 +3,7 @@
 import React from 'react';
 import Addons from 'react/addons';
 import stubRouterContext from './fixtures/stubRouterContext';
-import NavBar from '../navbar';
+import NavBar from '../index';
 
 const TestUtils = Addons.addons.TestUtils;
 const Subject = stubRouterContext(NavBar, {});

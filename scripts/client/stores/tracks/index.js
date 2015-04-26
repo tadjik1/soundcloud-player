@@ -1,7 +1,7 @@
 import { Set } from 'immutable';
 
-import SoundCloudAppDispatcher from '../../dispatcher/SoundCloudAppDispatcher';
-import { ActionTypes } from '../../constants/SoundCloudAppConstants';
+import SoundCloudAppDispatcher from 'dispatcher/SoundCloudAppDispatcher';
+import { ActionTypes } from 'constants/SoundCloudAppConstants';
 import Store from '../Store';
 
 const data = Symbol();

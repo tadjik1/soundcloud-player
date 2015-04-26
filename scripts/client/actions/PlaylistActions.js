@@ -1,6 +1,6 @@
-import SoundCloudAppDispatcher from '../dispatcher/SoundCloudAppDispatcher';
-import SoundCloudApiUtils from '../utils/SoundCloudApiUtils';
-import { ActionTypes } from '../constants/SoundCloudAppConstants';
+import SoundCloudAppDispatcher from 'dispatcher/SoundCloudAppDispatcher';
+import SoundCloudApiUtils from 'utils/SoundCloudApiUtils';
+import { ActionTypes } from 'constants/SoundCloudAppConstants';
 
 export default {
   async getPlaylistsByUser(userId) {

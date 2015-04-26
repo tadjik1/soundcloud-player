@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (config) {
   config.set({
     'frameworks': [
@@ -62,11 +64,9 @@ module.exports = function (config) {
           }
         ]
       },
-      'resolve': {
-        'extensions': [
-          '',
-          '.js'
-        ]
+      resolve: {
+        root: path.resolve(__dirname, './scripts/client'),
+        extensions: ['', '.js']
       }
     },
     //sometime firefox runs very slow - it can takes 20-30 seconds

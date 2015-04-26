@@ -1,8 +1,8 @@
 import React from 'react';
-import TrackActions from '../../actions/TrackActions';
-import UsersActions from '../../actions/UsersActions';
-import TracksStore from '../../stores/tracks/tracks';
-import UsersStore from '../../stores/users/users';
+import TrackActions from 'actions/TrackActions';
+import UsersActions from 'actions/UsersActions';
+import TracksStore from 'stores/tracks';
+import UsersStore from 'stores/users';
 
 let getStateFromStores = () => {
   return {

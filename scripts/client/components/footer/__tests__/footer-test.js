@@ -1,7 +1,7 @@
 /* global describe, it */
 
 import React from 'react/addons';
-import Footer from '../footer';
+import Footer from '../index';
 
 const TestUtils = React.addons.TestUtils;
 
