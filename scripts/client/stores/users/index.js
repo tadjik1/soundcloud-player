@@ -1,6 +1,8 @@
+import { Set } from 'immutable';
+
+import SoundCloudAppDispatcher from 'dispatcher/SoundCloudAppDispatcher';
+import { ActionTypes } from 'constants/SoundCloudAppConstants';
 import Store from '../Store';
-import SoundCloudAppDispatcher from '../../dispatcher/SoundCloudAppDispatcher';
-import { ActionTypes } from '../../constants/SoundCloudAppConstants';
 
 const data = Symbol();
 
@@ -8,11 +10,17 @@ class UsersStore extends Store {
   constructor() {
     super();
 
-    this[data] = {};
-  }
+    this[data] = {
+      users: new Set([])
+    };
+  };
 
-  getById(id) {
-    return this[data][id];
+  getAllUsers() {
+    return this[data].users;
+  };
+
+  get(id) {
+    return this[data].users.filter((user) => user.id === id);
   }
 }
 
@@ -20,11 +28,9 @@ let usersStore = new UsersStore();
 
 usersStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
   switch (action.type) {
-    case ActionTypes.FETCHED_TYPE_USER:
-      // here we can implement our model... extend all instances, for example
-      action.data.forEach((user) => {
-        usersStore[data][user.id] = user;
-      });
+    case ActionTypes.RECEIVE_USERS:
+      usersStore[data].users = usersStore[data].users.merge(action.users);
+      usersStore.emitChange();
       break;
     default:
       break;

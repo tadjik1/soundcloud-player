@@ -32,6 +32,10 @@ export default {
 
   async searchGroups(params) {
     return await SoundCloudSDK.get('/groups', params);
+  },
+
+  async authenticate() {
+    return await SoundCloudSDK.authenticate();
   }
 };
 

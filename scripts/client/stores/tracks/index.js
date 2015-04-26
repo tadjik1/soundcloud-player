@@ -1,6 +1,8 @@
+import { Set } from 'immutable';
+
+import SoundCloudAppDispatcher from 'dispatcher/SoundCloudAppDispatcher';
+import { ActionTypes } from 'constants/SoundCloudAppConstants';
 import Store from '../Store';
-import SoundCloudAppDispatcher from '../../dispatcher/SoundCloudAppDispatcher';
-import { ActionTypes } from '../../constants/SoundCloudAppConstants';
 
 const data = Symbol();
 
@@ -8,23 +10,23 @@ class TracksStore extends Store {
   constructor() {
     super();
 
-    this[data] = {};
-  }
+    this[data] = {
+      tracks: new Set([])
+    };
+  };
 
-  getById(id) {
-    return this[data][id];
-  }
+  getAllTracks() {
+    return this[data].tracks;
+  };
 }
 
 let tracksStore = new TracksStore();
 
 tracksStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
   switch (action.type) {
-    case ActionTypes.FETCHED_TYPE_TRACK:
-      // here we can implement our model... extend all instances, for example
-      action.data.forEach((track) => {
-        tracksStore[data][track.id] = track;
-      });
+    case ActionTypes.RECEIVE_TRACKS:
+      tracksStore[data].tracks = tracksStore[data].tracks.merge(action.tracks);
+      tracksStore.emitChange();
       break;
     default:
       break;

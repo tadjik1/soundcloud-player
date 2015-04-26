@@ -1,0 +1,46 @@
+import React from 'react';
+import UserStore from 'stores/user';
+import UserActions from 'actions/UserAction';
+
+let getUserInfo = () => {
+  return {
+    isLogin: UserStore.isLogin(),
+    userName: UserStore.get('username')
+  };
+};
+
+export default class LoginComponent extends React.Component {
+  constructor() {
+    super();
+
+    this.state = getUserInfo();
+  };
+
+  componentDidMount() {
+    UserStore.addChangeListener(this._onChange.bind(this));
+  };
+
+  componentWillUnmount() {
+    UserStore.removeChangeListener(this._onChange.bind(this));
+  };
+
+  handleClick() {
+    if (this.state.isLogin) return true;  //if already login just redirect to profile page
+
+    UserActions.doLogin();
+  };
+
+  render() {
+    let href = this.state.isLogin ? '/profile' : '#';
+    let title = this.state.isLogin ? this.state.userName : 'Login';
+    return (
+      <li>
+        <a href={href} onClick={this.handleClick.bind(this)}>{title}</a>
+      </li>
+    );
+  };
+
+  _onChange() {
+    this.setState(getUserInfo());
+  };
+}

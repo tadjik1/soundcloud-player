@@ -18,7 +18,10 @@ export default {
     FETCHED_TYPE_TRACK: null,
 
     // groups store
-    FETCHED_TYPE_GROUP: null
+    FETCHED_TYPE_GROUP: null,
+
+    USER_LOGIN: null,
+    USER_LOGOUT: null
   }),
 
   DataTypes: keyMirror({

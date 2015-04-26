@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (config) {
   config.set({
     'frameworks': [
@@ -8,10 +10,10 @@ module.exports = function (config) {
     ],
     'browsers': ['Firefox'],
     'files': [
-      'scripts/**/__tests__/*.js'
+      'scripts/client/**/*-test.js'
     ],
     'preprocessors': {
-      'scripts/**/__tests__/*.js': ['webpack']
+      'scripts/client/**/*-test.js': ['webpack']
     },
     'webpackMiddleware': {'noInfo': true},
     'reporters': [
@@ -62,12 +64,13 @@ module.exports = function (config) {
           }
         ]
       },
-      'resolve': {
-        'extensions': [
-          '',
-          '.js'
-        ]
+      resolve: {
+        root: path.resolve(__dirname, './scripts/client'),
+        extensions: ['', '.js']
       }
-    }
+    },
+    //sometime firefox runs very slow - it can takes 20-30 seconds
+    //so set this parameter to 100 seconds
+    browserNoActivityTimeout: 100000
   });
 };

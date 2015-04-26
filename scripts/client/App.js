@@ -1,8 +1,8 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
 
-import NavBar from './components/navbar/navbar';
-import Footer from './components/footer/footer';
+import NavBar from 'components/navbar';
+import Footer from 'components/footer';
 
 export default class App extends React.Component {
   render() {

@@ -20,9 +20,16 @@ router.run((Handler, state) => {
 // export for http://fb.me/react-devtools
 window.React = React;
 
-SC.initialize({
-  client_id: '8245587a488fdb47747133be16133e4f'
-});
+let SCInitializeParams = {
+  client_id: '8245587a488fdb47747133be16133e4f',
+  redirect_uri: 'http://127.0.0.1:3000/callback'
+};
+
+if (localStorage.getItem('oauth_token')) {
+  SCInitializeParams.access_token = localStorage.getItem('oauth_token');
+}
+
+SC.initialize(SCInitializeParams);
 
 document.onclick = event => {
   let el = event.target;

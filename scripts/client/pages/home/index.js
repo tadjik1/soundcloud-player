@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
-import Tiles from '../../components/tiles';
-import TilesStore from '../../stores/tiles/';
+import Tiles from 'components/tiles';
+import TilesStore from 'stores/tiles';
 
 export default class HomePage extends Component {
 
