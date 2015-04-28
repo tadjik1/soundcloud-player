@@ -16,15 +16,21 @@ export default {
   },
 
   async authenticate() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       SC.connect(() => {
-        SC.get('/me', (me, err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(me);
-          }
-        });
+        resolve();
+      });
+    });
+  },
+
+  async getMe() {
+    return new Promise((resolve, reject) => {
+      SC.get('/me', (me, err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(me);
+        }
       });
     });
   }

@@ -36,6 +36,10 @@ export default {
 
   async authenticate() {
     return await SoundCloudSDK.authenticate();
+  },
+
+  async getMe() {
+    return await SoundCloudSDK.getMe();
   }
 };
 

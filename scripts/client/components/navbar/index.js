@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
-import LoginComponent from './components/login';
+import LoginComponent from './login';
 
 export default class Navbar extends Component {
   static propTypes = {

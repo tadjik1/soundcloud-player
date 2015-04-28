@@ -14,6 +14,7 @@ export default class LoginComponent extends React.Component {
     super();
 
     this.state = getUserInfo();
+    UserActions.getMe();
   };
 
   componentDidMount() {
@@ -22,6 +23,10 @@ export default class LoginComponent extends React.Component {
 
   componentWillUnmount() {
     UserStore.removeChangeListener(this._onChange.bind(this));
+  };
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.isLogin && nextState.isLogin !== this.state.isLogin) UserActions.getMe();
   };
 
   handleClick() {

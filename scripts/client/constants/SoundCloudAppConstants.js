@@ -20,7 +20,9 @@ export default {
     // groups store
     FETCHED_TYPE_GROUP: null,
 
+    //user actions
     USER_LOGIN: null,
+    RECEIVE_USER_INFO: null,
     USER_LOGOUT: null
   }),
 

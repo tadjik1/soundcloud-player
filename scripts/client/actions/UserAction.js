@@ -1,13 +1,21 @@
 import SoundCloudAppDispatcher from 'dispatcher/SoundCloudAppDispatcher';
-import SoundCloudApiUtils from 'utils/SoundCloudApiUtils';
+import CustomRelay from 'utils/CustomRelay';
 import { ActionTypes } from 'constants/SoundCloudAppConstants';
 
 export default {
   async doLogin() {
-    let user = await SoundCloudApiUtils.authenticate();
+    await CustomRelay.fetch('authenticate');
 
     SoundCloudAppDispatcher.dispatch({
-      type: ActionTypes.USER_LOGIN,
+      type: ActionTypes.USER_LOGIN
+    });
+  },
+
+  async getMe() {
+    let user = await CustomRelay.fetch('getMe');
+
+    SoundCloudAppDispatcher.dispatch({
+      type: ActionTypes.RECEIVE_USER_INFO,
       user: user
     });
   }

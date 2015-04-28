@@ -11,19 +11,21 @@ class UserStore extends Store {
 
     this[data] = {
       isLogin: localStorage.getItem(StorageKey) ? true : false,
-      user: {
-        username: localStorage.getItem('username')
-      }
+      user: {}
     };
-  };
+  }
 
   get(field) {
     return this[data].user[field];
-  };
+  }
 
   isLogin() {
     return this[data].isLogin;
-  };
+  }
+
+  getUserInfo() {
+    return this[data].user;
+  }
 }
 
 let userStore = new UserStore();
@@ -32,9 +34,12 @@ userStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
   switch (action.type) {
     case ActionTypes.USER_LOGIN:
       userStore[data].isLogin = true;
-      userStore[data].user = action.user;
       localStorage.setItem(StorageKey, SC.accessToken());
-      localStorage.setItem('username', action.user.username);
+      userStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_USER_INFO:
+      userStore[data].user = action.user;
       userStore.emitChange();
       break;
 
@@ -42,7 +47,6 @@ userStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
       userStore[data].isLogin = false;
       userStore[data].user = {};
       localStorage.removeItem(StorageKey);
-      localStorage.removeItem('username');
       userStore.emitChange();
       break;
 
