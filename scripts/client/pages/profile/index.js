@@ -1,5 +1,4 @@
 import React from 'react';
-import CustomRelay from 'utils/CustomRelay';
 import UserStore from 'stores/profile';
 import UserActions from 'actions/UserAction';
 
@@ -11,9 +10,8 @@ export default class ProfilePage extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      user: CustomRelay.get('user')
-    };
+    this.state = {};
+    UserActions.getMe();
   };
 
   componentDidMount() {

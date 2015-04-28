@@ -24,11 +24,9 @@ let sortKeys = (obj) => {
 export default {
   async fetch(methodName, params = {}) {
     let id = hash(Object.assign({}, {name: methodName}, sortKeys(params)));
-    let state = cache[id];
 
     if (!cache[id]) {
-      cache[id] = 'pending';
-      cache[id] = await SoundCloudApi[methodName](params);
+      cache[id] = SoundCloudApi[methodName](params);
     }
     return cache[id];
   }

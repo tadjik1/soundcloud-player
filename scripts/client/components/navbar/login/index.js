@@ -1,5 +1,5 @@
 import React from 'react';
-import UserStore from 'stores/user';
+import UserStore from 'stores/profile';
 import UserActions from 'actions/UserAction';
 
 let getUserInfo = () => {
