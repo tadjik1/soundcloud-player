@@ -1,23 +1,21 @@
-import { Set } from 'immutable';
-
 import SoundCloudAppDispatcher from 'dispatcher/SoundCloudAppDispatcher';
 import { ActionTypes } from 'constants/SoundCloudAppConstants';
-import Store from '../Store';
+import EntityStore from '../EntityStore';
 
 const data = Symbol();
 
-class TracksStore extends Store {
+class TracksStore extends EntityStore {
   constructor() {
     super();
 
     this[data] = {
-      tracks: new Set([])
+      data: {}
     };
-  };
+  }
 
-  getAllTracks() {
-    return this[data].tracks;
-  };
+  getData() {
+    return this[data];
+  }
 }
 
 let tracksStore = new TracksStore();
@@ -25,7 +23,9 @@ let tracksStore = new TracksStore();
 tracksStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
   switch (action.type) {
     case ActionTypes.RECEIVE_TRACKS:
-      tracksStore[data].tracks = tracksStore[data].tracks.merge(action.tracks);
+      action.data.forEach((item) => {
+        tracksStore.getData().data[item.id] = item;
+      });
       tracksStore.emitChange();
       break;
     default:

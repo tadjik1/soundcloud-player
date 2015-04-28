@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchActions from '../../../actions/SearchActions';
 
 export default class QueryString extends React.Component {
   render() {
@@ -9,8 +8,8 @@ export default class QueryString extends React.Component {
           <label className="hidden">Search</label>
           <input className="col-md-12"
                  type="text" placeholder="looking for..."
-                 onChange={this.updateQuery}
-                 value={this.props.params.q} />
+                 onChange={this.updateQuery.bind(this)}
+                 value={this.props.query} />
         </div>
         <div className="form-group col-md-2">
           <button className="col-md-12" type="submit" onClick={this.searchQuery.bind(this)}>
@@ -22,11 +21,10 @@ export default class QueryString extends React.Component {
   }
 
   updateQuery(event) {
-    SearchActions.updateQueryString(event.target.value);
+    this.props.updateQuery(event.target.value);
   }
 
   searchQuery(event) {
-    event.preventDefault();
-    SearchActions.fetchData(this.props.type, this.props.params);
+    this.props.searchQuery(event);
   }
 }

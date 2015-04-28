@@ -10,14 +10,14 @@ export default class SingleEntity extends React.Component {
     let el;
 
     switch (this.props.type) {
-      case DataTypes.TYPE_TRACK:
-        el = (<TrackEntity />);
+      case DataTypes.TRACKS:
+        el = (<TrackEntity data={this.props.data} />);
         break;
-      case DataTypes.TYPE_GROUP:
-        el = (<GroupEntity />);
+      case DataTypes.GROUPS:
+        el = (<GroupEntity data={this.props.data} />);
         break;
-      case DataTypes.TYPE_USER:
-        el = (<UserEntity />);
+      case DataTypes.USERS:
+        el = (<UserEntity data={this.props.data} />);
         break;
       default:
         el = (<div>Something went wrong...</div>);

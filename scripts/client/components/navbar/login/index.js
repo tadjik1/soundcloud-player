@@ -3,6 +3,12 @@ import UserStore from 'stores/profile';
 import UserActions from 'actions/UserAction';
 
 let getUserInfo = () => {
+  let login = UserStore.isLogin();
+
+  if (login) {
+    UserActions.getMe();
+  }
+
   return {
     isLogin: UserStore.isLogin(),
     userName: UserStore.get('username')
@@ -14,7 +20,6 @@ export default class LoginComponent extends React.Component {
     super();
 
     this.state = getUserInfo();
-    UserActions.getMe();
   };
 
   componentDidMount() {
@@ -25,9 +30,9 @@ export default class LoginComponent extends React.Component {
     UserStore.removeChangeListener(this._onChange.bind(this));
   };
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.isLogin && nextState.isLogin !== this.state.isLogin) UserActions.getMe();
-  };
+  //componentWillUpdate(nextProps, nextState) {
+  //  if (nextState.isLogin && nextState.isLogin !== this.state.isLogin) UserActions.getMe();
+  //};
 
   handleClick() {
     if (this.state.isLogin) return true;  //if already login just redirect to profile page

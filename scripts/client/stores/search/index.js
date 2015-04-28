@@ -11,16 +11,16 @@ import GroupsStore from '../groups/';
 const data = Symbol();
 
 const TYPES = [
-  DataTypes.TYPE_TRACK,
-  DataTypes.TYPE_USER,
-  DataTypes.TYPE_GROUP
+  DataTypes.TRACKS,
+  DataTypes.USERS,
+  DataTypes.GROUPS
 ];
 
 let TYPE_STORES = {};
 
-TYPE_STORES[DataTypes.TYPE_TRACK] = TracksStore;
-TYPE_STORES[DataTypes.TYPE_USER] = UsersStore;
-TYPE_STORES[DataTypes.TYPE_GROUP] = GroupsStore;
+TYPE_STORES[DataTypes.TRACKS] = TracksStore;
+TYPE_STORES[DataTypes.USERS] = UsersStore;
+TYPE_STORES[DataTypes.GROUPS] = GroupsStore;
 
 class SearchStore extends Store {
   constructor() {
@@ -31,15 +31,15 @@ class SearchStore extends Store {
       // but this structure is a bit more flexible
       searchEntities: new Set([
         {
-          type: DataTypes.TYPE_TRACK,
+          type: DataTypes.TRACKS,
           text: 'Tracks'
         },
         {
-          type: DataTypes.TYPE_USER,
+          type: DataTypes.USERS,
           text: 'Users'
         },
         {
-          type: DataTypes.TYPE_GROUP,
+          type: DataTypes.GROUPS,
           text: 'Groups'
         }
       ]),
@@ -52,14 +52,7 @@ class SearchStore extends Store {
 
         return p;
       }, {}),
-      type: DataTypes.TYPE_TRACK,
-      // quite strange construction, but it is a bit more flexible
-      // (if we decide to switch from plain array to any other data structure, for instance)
-      results: TYPES.reduce((p, c) => {
-        p[c] = [];
-
-        return p;
-      }, {})
+      type: DataTypes.TRACKS
     };
   }
 
@@ -73,12 +66,6 @@ class SearchStore extends Store {
 
   getType() {
     return this[data].type;
-  }
-
-  getResults() {
-    return this[data].results[this[data].type].map((id) => {
-      return TYPE_STORES[this[data].type].getById(id);
-    });
   }
 }
 
@@ -94,10 +81,6 @@ searchStore.dispatchToken = SoundCloudAppDispatcher.register((action) => {
       break;
     case ActionTypes.UPDATE_TYPE:
       searchStore[data].type = action.newType;
-      searchStore.emitChange();
-      break;
-    case ActionTypes.RECEIVE_RESULTS:
-      searchStore[data].results[action.dataType] = action.results;
       searchStore.emitChange();
       break;
     default:

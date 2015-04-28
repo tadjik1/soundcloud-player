@@ -1,53 +1,81 @@
 import SoundCloudAppDispatcher from '../dispatcher/SoundCloudAppDispatcher';
-import SoundCloudApiUtils from '../utils/SoundCloudApiUtils';
-import { ActionTypes } from '../constants/SoundCloudAppConstants';
-import { DataTypes } from '../constants/SoundCloudAppConstants';
+//import SoundCloudApiUtils from '../utils/SoundCloudApiUtils';
+import { ActionTypes, DataTypes } from '../constants/SoundCloudAppConstants';
+//import { DataTypes } from '../constants/SoundCloudAppConstants';
+import QueryCache from 'utils/CustomRelay';
+
+let getSearchEntities = (type) => {
+  let methodName = '';
+  let updateEvent = '';
+
+  switch (type) {
+    case DataTypes.GROUPS:
+      methodName = 'searchGroups';
+      updateEvent = 'RECEIVE_GROUPS';
+      break;
+    case DataTypes.TRACKS:
+      methodName = 'searchTracks';
+      updateEvent = 'RECEIVE_TRACKS';
+      break;
+    case DataTypes.USERS:
+      methodName = 'searchUsers';
+      updateEvent = 'RECEIVE_USERS';
+      break;
+    default:
+      break;
+  }
+
+  return {
+    method: methodName,
+    update: updateEvent
+  };
+};
 
 export default {
-  updateQueryString(query) {
+  async updateQueryString(query, params, type) {
     SoundCloudAppDispatcher.dispatch({
       type: ActionTypes.UPDATE_QUERY,
       query: query
     });
-  },
 
-  async fetchData(type, params) {
-    let results;
+    let variables = getSearchEntities(type);
+    let need = QueryCache.checkCache(variables.method, params);
 
-    switch (type) {
-      case DataTypes.TYPE_GROUP:
-        results = await SoundCloudApiUtils.searchGroups(params);
-        break;
-      case DataTypes.TYPE_TRACK:
-        results = await SoundCloudApiUtils.searchTracks(params);
-        break;
-      case DataTypes.TYPE_USER:
-        results = await SoundCloudApiUtils.searchUsers(params);
-        break;
-      default:
-        results = [];
+    if (!need) {
+      let res = await QueryCache.fetch(variables.method, params);
+
+      SoundCloudAppDispatcher.dispatch({
+        type: ActionTypes[variables.update],
+        data: res
+      });
     }
+  },
 
-    console.log(ActionTypes, ['FETCHED_' + type], ActionTypes['FETCHED_' + type]);
-
+  applyData(type, params, results) {
     SoundCloudAppDispatcher.dispatch({
-      type: ActionTypes['FETCHED_' + type],
-      data: results
-    });
-
-    SoundCloudAppDispatcher.dispatch({
-      type: ActionTypes.RECEIVE_RESULTS,
-      dataType: type,
-      results: results.map((result) => {
-        return result.id;
-      })
+      type: ActionTypes['RECEIVE_' + type],
+      data: results,
+      queryType: 'search',
+      params: params
     });
   },
 
-  updateSearchType(type) {
+  async updateSearchType(type, params) {
     SoundCloudAppDispatcher.dispatch({
       type: ActionTypes.UPDATE_TYPE,
       newType: type
     });
+
+    let variables = getSearchEntities(type);
+    let need = QueryCache.checkCache(variables.method, params);
+
+    if (!need) {
+      let res = await QueryCache.fetch(variables.method, params);
+
+      SoundCloudAppDispatcher.dispatch({
+        type: ActionTypes[variables.update],
+        data: res
+      });
+    }
   }
 };

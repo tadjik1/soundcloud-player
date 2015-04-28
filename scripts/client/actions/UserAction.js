@@ -9,14 +9,23 @@ export default {
     SoundCloudAppDispatcher.dispatch({
       type: ActionTypes.USER_LOGIN
     });
+
+    this.getMe();
   },
 
   async getMe() {
-    let user = await CustomRelay.fetch('getMe');
+    if (!CustomRelay.checkCache('getMe')) {
+      let user = await CustomRelay.fetch('getMe');
 
-    SoundCloudAppDispatcher.dispatch({
-      type: ActionTypes.RECEIVE_USER_INFO,
-      user: user
-    });
+      SoundCloudAppDispatcher.dispatch({
+        type: ActionTypes.RECEIVE_USERS,
+        data: [user]
+      });
+
+      SoundCloudAppDispatcher.dispatch({
+        type: ActionTypes.RECEIVE_USER_INFO,
+        user: user
+      });
+    }
   }
 };

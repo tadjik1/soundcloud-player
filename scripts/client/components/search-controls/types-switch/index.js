@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchStore from '../../../stores/search/index';
-import SearchActions from '../../../actions/SearchActions';
+import { DataTypes } from 'constants/SoundCloudAppConstants';
+import SearchStore from 'stores/search';
 
 export default class TypesSwitch extends React.Component {
 
@@ -24,15 +24,10 @@ export default class TypesSwitch extends React.Component {
   }
 
   updateSearchType(type) {
-    if (type !== this.props.type) {
-      SearchActions.updateSearchType(type);
-      SearchActions.fetchData(type, this.props.params);
-    }
+    this.props.changeType(type);
   }
 }
 
-let searchOrder = SearchStore.getSearchEntities();
-
 TypesSwitch.defaultProps = {
-  type: searchOrder && searchOrder[0] ? searchOrder[0] : ''
+  type: DataTypes.TRACKS
 };

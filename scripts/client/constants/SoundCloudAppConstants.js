@@ -5,6 +5,7 @@ export default {
     RECEIVE_PLAYLISTS: null,
     RECEIVE_TRACKS: null,
     RECEIVE_USERS: null,
+    RECEIVE_GROUPS: null,
 
     // search page section
     UPDATE_QUERY: null,
@@ -27,8 +28,8 @@ export default {
   }),
 
   DataTypes: keyMirror({
-    TYPE_TRACK: null,
-    TYPE_GROUP: null,
-    TYPE_USER: null
+    TRACKS: null,
+    GROUPS: null,
+    USERS: null
   })
 };

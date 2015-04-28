@@ -22,12 +22,46 @@ let sortKeys = (obj) => {
 };
 
 export default {
+  pending: {},
+
+  checkCache(methodName, params = {}) {
+    let id = this.calcHash(methodName, params);
+
+    return !!cache[id];
+  },
+
   async fetch(methodName, params = {}) {
-    let id = hash(Object.assign({}, {name: methodName}, sortKeys(params)));
+    let id = this.calcHash(methodName, params),
+        res;
 
     if (!cache[id]) {
-      cache[id] = SoundCloudApi[methodName](params);
+      if (!this.pending[id]) {
+        this.pending[id] = SoundCloudApi[methodName](params);
+      }
+      console.log(this.pending[id]);
+      res = await this.pending[id];
+      delete this.pending[id];
+
+      cache[id] = {
+        data: res.map ? res.map((item) => {
+          return item.id;
+        }) : res
+      };
     }
-    return cache[id];
+    return res;
+  },
+
+  fetchImmediately(methodName, params = {}) {
+    let id = this.calcHash(methodName, params);
+    let results = [];
+
+    if (cache[id]) results = cache[id].data;
+
+    return results;
+  },
+
+  calcHash(methodName, params) {
+    return hash(Object.assign({}, {name: methodName}, sortKeys(params)));
   }
+
 };
