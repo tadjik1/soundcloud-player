@@ -3,7 +3,10 @@ import React, { Component, PropTypes } from 'react';
 export default class GroupComponent extends Component {
   static PropTypes = {
     group: PropTypes.shape({
-      id: PropTypes.string.isRequired
+      id: PropTypes.string.isRequired,
+      artwork_url: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      short_description: PropTypes.string.isRequired
     }).isRequired
   };
 
@@ -23,5 +26,5 @@ export default class GroupComponent extends Component {
         </div>
       </div>
     );
-  }
+  };
 }

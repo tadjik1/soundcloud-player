@@ -30,5 +30,5 @@ export default class SearchControls extends Component {
         </div>
       </div>
     );
-  }
+  };
 }

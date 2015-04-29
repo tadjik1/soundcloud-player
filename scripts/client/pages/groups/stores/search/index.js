@@ -9,7 +9,7 @@ class SearchControlsStore extends Store {
     this.state = {
       title: 'Find interesting groups',
       placeholder: 'Enter group title',
-      query: 'lala'
+      query: ''
     };
   };
 
