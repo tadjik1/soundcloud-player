@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
-import LoginComponent from './login';
 
 export default class Navbar extends Component {
   static propTypes = {
@@ -25,11 +24,17 @@ export default class Navbar extends Component {
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav">
               <li>
-                <Link to="/search">Search</Link>
+                <Link to="/users">Users</Link>
               </li>
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <LoginComponent />
+              <li>
+                <Link to="/groups">Groups</Link>
+              </li>
+              <li>
+                <Link to="/playlists">Playlists</Link>
+              </li>
+              <li>
+                <Link to="/tracks">Tracks</Link>
+              </li>
             </ul>
           </div>
         </div>

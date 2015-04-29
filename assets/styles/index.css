@@ -73,7 +73,12 @@ body {
 /* Search Page styles */
 /* -------------------------------------------------- */
 
-.search {
+.groups {
   padding-top: 50px;
   padding-bottom: 20px;
+}
+
+/* Search component */
+.search-controls__query.form-control {
+  width: 100%;
 }

@@ -1,5 +1,4 @@
 import 'babel/polyfill';
-import url from 'url';
 import React from 'react';
 import Router from 'react-router';
 
@@ -32,25 +31,3 @@ router.run((Handler, state) => {
 
 // export for http://fb.me/react-devtools
 window.React = React;
-
-document.onclick = event => {
-  let el = event.target;
-
-  while (el && el.parentNode) {
-    if (el.tagName === 'A') break;
-    el = el.parentNode;
-  }
-  if (!el || el.tagName !== 'A') return;
-
-  const href = el.getAttribute('href');
-
-  if (!href) return;
-
-  const resolvedHref = url.resolve(window.location.href, href);
-  const { host, path } = url.parse(resolvedHref);
-
-  if (host === window.location.host) {
-    event.preventDefault();
-    router.transitionTo(path);
-  }
-};

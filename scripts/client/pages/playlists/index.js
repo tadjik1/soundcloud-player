@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 
-export default class HomePage extends Component {
-
+export default class PlaylistsPage extends Component {
   constructor(props) {
     super(props);
   };
