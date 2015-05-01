@@ -1,7 +1,7 @@
 import AppDispatcher from 'dispatcher/AppDispatcher';
 import ActionTypes from 'constants/ActionTypes/GroupActionTypes';
 import Store from '../Store';
-import { Map, Set, Seq } from 'immutable';
+import { Map, Set } from 'immutable';
 
 const data = Symbol();
 
@@ -22,8 +22,8 @@ class GroupsStore extends Store {
   getGroupsByQuery(query) {
     if (!this.alreadySearched(query)) return [];
 
-    return this[data].searched.get(query).map((id) => {
-      return this[data].groups.get(id);
+    return this[data].searched.get(query).map((name) => {
+      return this[data].groups.get(name);
     });
   };
 
@@ -43,9 +43,8 @@ groupsStore.dispatchToken = AppDispatcher.register((payload) => {
       break;
     case ActionTypes.REQUEST_GROUPS_SUCCESS:
       groupsStore[data].inProcess = groupsStore[data].inProcess.delete(action.query);
-      //I need to fix it! need to correctly merge groups and get all keys
-      //groupsStore[data].groups = groupsStore[data].groups.merge(action.groups);
-      //groupsStore[data].searched.set(action.query, action.groups.keys());
+      groupsStore[data].groups = groupsStore[data].groups.merge(action.groups);
+      groupsStore[data].searched = groupsStore[data].searched.set(action.query, action.names);
       groupsStore.emitChange();
       break;
     case ActionTypes.REQUEST_GROUPS_ERROR:
