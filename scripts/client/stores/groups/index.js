@@ -4,6 +4,26 @@ import Store from '../Store';
 import { Map, Set } from 'immutable';
 
 const data = Symbol();
+/**
+ * function for paring plain javascript array with groups to immutable map
+ * with {groupId: group, ...} structure
+ * @param groups {Array} - array with groups
+ * @returns {{groups: Object, ids: {}}}
+ */
+let parseGroups = (groups) => {
+  let objWithGroups = {};
+  let arrWithIds = [];
+
+  groups.forEach((group) => {
+    objWithGroups[group.id] = group;
+    arrWithIds.push('' + group.id);
+  });
+
+  return {
+    groups: new Map(objWithGroups),
+    ids: arrWithIds
+  };
+};
 
 class GroupsStore extends Store {
   constructor() {
@@ -22,8 +42,8 @@ class GroupsStore extends Store {
   getGroupsByQuery(query) {
     if (!this.alreadySearched(query)) return [];
 
-    return this[data].searched.get(query).map((name) => {
-      return this[data].groups.get(name);
+    return this[data].searched.get(query).map((id) => {
+      return this[data].groups.get(id);
     });
   };
 
@@ -43,8 +63,9 @@ groupsStore.dispatchToken = AppDispatcher.register((payload) => {
       break;
     case ActionTypes.REQUEST_GROUPS_SUCCESS:
       groupsStore[data].inProcess = groupsStore[data].inProcess.delete(action.query);
-      groupsStore[data].groups = groupsStore[data].groups.merge(action.groups);
-      groupsStore[data].searched = groupsStore[data].searched.set(action.query, action.names);
+      const { groups, ids } = parseGroups(action.groups);
+      groupsStore[data].groups = groupsStore[data].groups.merge(groups);
+      groupsStore[data].searched = groupsStore[data].searched.set(action.query, ids);
       groupsStore.emitChange();
       break;
     case ActionTypes.REQUEST_GROUPS_ERROR:

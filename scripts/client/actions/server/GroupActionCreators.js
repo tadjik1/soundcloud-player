@@ -2,11 +2,10 @@ import AppDispatcher from 'dispatcher/AppDispatcher';
 import ActionTypes from 'constants/ActionTypes/GroupActionTypes';
 
 export default {
-  handleGroupsSuccess(groups, names, query) {
+  handleGroupsSuccess(groups, query) {
     AppDispatcher.handleServerAction({
       type: ActionTypes.REQUEST_GROUPS_SUCCESS,
       groups,
-      names,
       query
     });
   },

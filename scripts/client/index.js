@@ -25,7 +25,7 @@ SC.initialize(SCInitializeParams);
 router.run((Handler, state) => {
   React.render(
     <Handler {...state} />,
-    document.body
+    document.getElementById('app')
   );
 });
 
