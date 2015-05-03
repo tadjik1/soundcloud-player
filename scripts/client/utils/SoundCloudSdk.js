@@ -1,5 +1,4 @@
 const defaultParams = {
-  limit: 10
 };
 
 export default {
@@ -10,26 +9,6 @@ export default {
           reject(err);
         } else {
           resolve(res);
-        }
-      });
-    });
-  },
-
-  async authenticate() {
-    return new Promise((resolve) => {
-      SC.connect(() => {
-        resolve();
-      });
-    });
-  },
-
-  async getMe() {
-    return new Promise((resolve, reject) => {
-      SC.get('/me', (me, err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(me);
         }
       });
     });
