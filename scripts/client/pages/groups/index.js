@@ -1,14 +1,14 @@
 import React, { PropTypes, Component } from 'react';
-
+import DocumentTitle from 'react-document-title';
 //components
-import SearchComponent from 'components/search';
+import SearchControls from 'components/SearchControls';
 import SearchResults from 'components/SearchResults';
 
 //stores
-import SearchStore from './stores/search';
+import GroupsPageStore from './stores/groupPage';
 
 let getStateFromStore = () => {
-  const { title, placeholder } = SearchStore.getProps();
+  const { title, placeholder } = GroupsPageStore.getProps();
   return { title, placeholder };
 };
 
@@ -41,13 +41,15 @@ export default class GroupsPage extends Component {
 
   render() {
     return (
-      <div className="groups">
-        <SearchComponent title={this.state.title}
-                         query={this.state.query}
-                         placeholder={this.state.placeholder} />
+      <DocumentTitle title={this.state.query ? this.state.query + ' search' : 'Groups Search'}>
+        <div className="groups">
+          <SearchControls title={this.state.title}
+                           query={this.state.query}
+                           placeholder={this.state.placeholder} />
 
-        <SearchResults query={this.state.query} />
-      </div>
+          <SearchResults query={this.state.query} />
+        </div>
+      </DocumentTitle>
     );
   };
 }

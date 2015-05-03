@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 export default class GroupComponent extends Component {
   static PropTypes = {
@@ -13,14 +14,25 @@ export default class GroupComponent extends Component {
   render() {
     const group = this.props.group;
     return (
-      <div className="col-md-4">
-        <div className="thumbnail">
-          <img src={group.artwork_url} alt={group.name} />
-          <div className="caption">
-            <h3>{group.name}</h3>
-            <p>{group.short_description}</p>
+      <div className="col-md-6">
+        <div className="media">
+          <div className="media-left media-top">
+            <Link to={'/group/' + group.id}>
+              <img className="media-object" src={group.artwork_url} alt={group.name} />
+            </Link>
+          </div>
+          <div className="media-body">
+            <h4 className="media-heading">{group.name.slice(0, 45) + '…'}</h4>
+            <p>{group.short_description.slice(0, 45) + '…'}</p>
             <p>
-              <a href="#" className="btn btn-primary" role="button">Join the group</a>
+              <Link to={'/users?group=' + group.id}>Members
+                <span className="badge">{group.members_count}</span>
+              </Link>
+            </p>
+            <p>
+              <Link to={'/tracks?group=' + group.id}>Tracks
+                <span className="badge">{group.track_count}</span>
+              </Link>
             </p>
           </div>
         </div>

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
+import PureComponent from 'utils/HigherOrderComponents/purecomponent';
 import Immutable from 'immutable';
 //components
 import GroupComponent from 'components/group';
@@ -13,7 +14,7 @@ let getState = (query) => {
   };
 };
 
-export default class SearchResults extends Component {
+export default class SearchResults extends PureComponent {
   static propTypes = {
     query: PropTypes.string.isRequired
   };
@@ -21,15 +22,20 @@ export default class SearchResults extends Component {
   constructor(props) {
     super(props);
 
+    this.onChange = this._onChange.bind(this);
+
     this.state = {
       groups: []
     };
   };
 
   componentDidMount() {
-    GroupsStore.addChangeListener(this._onChange.bind(this));
-
+    GroupsStore.addChangeListener(this.onChange);
     this.queryDidChange(this.props);
+  };
+
+  componentWillUnmount() {
+    GroupsStore.removeChangeListener(this.onChange);
   };
 
   componentWillReceiveProps(nextProps) {
