@@ -50,8 +50,8 @@ export default class SearchResults extends PureComponent {
     const { query } = props;
     if (query.length > 1) {
       GroupActionCreators.searchGroups(query);
-      this.setState(getState(query));
     }
+    this.setState(getState(query));
   };
 
   render() {
