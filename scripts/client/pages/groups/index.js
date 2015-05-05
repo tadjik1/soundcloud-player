@@ -1,53 +1,43 @@
 import React, { PropTypes, Component } from 'react';
 import DocumentTitle from 'react-document-title';
-//components
-import SearchControls from 'components/SearchControls';
-import SearchResults from 'components/SearchResults';
+import { capitalize } from 'utils/stringFunctions';
 
-//stores
-import GroupsPageStore from './stores/groupPage';
+import SearchControls from 'components/SearchControls';
+import SearchResults from './components/SearchResults';
+
+import UIStore from './stores/ui-store';
 
 let getStateFromStore = () => {
-  const { title, placeholder } = GroupsPageStore.getProps();
-  return { title, placeholder };
+  const { title, placeholder, url } = UIStore.getProps();
+  return { title, placeholder, url };
+};
+
+let parseQuery = (params) => {
+  const { query } = params;
+  return query.q || '';
 };
 
 export default class GroupsPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = Object.assign({}, getStateFromStore(), {
-      query: props.query.q || ''
-    });
-  };
-
-  static contextTypes = {
-    router: PropTypes.func.isRequired
-  };
-
   static propTypes = {
-    path: PropTypes.string.isRequired,
-    pathname: PropTypes.string.isRequired,
     query: PropTypes.object.isRequired
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.query.q !== this.state.query) {
-      this.setState({
-        query: nextProps.query.q || ''
-      });
-    }
+  constructor(props) {
+    super(props);
+
+    this.state = getStateFromStore();
   };
 
   render() {
+    const q = parseQuery(this.props);
     return (
-      <DocumentTitle title={this.state.query ? this.state.query + ' search' : 'Groups Search'}>
+      <DocumentTitle title={q ? capitalize(q) + ' Search' : 'SoundCloud Replica Search'}>
         <div className="groups">
           <SearchControls title={this.state.title}
-                           query={this.state.query}
-                           placeholder={this.state.placeholder} />
-
-          <SearchResults query={this.state.query} />
+                          query={q}
+                          url={this.state.url}
+                          placeholder={this.state.placeholder} />
+          <SearchResults q={q} />
         </div>
       </DocumentTitle>
     );

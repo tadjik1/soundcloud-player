@@ -54,6 +54,7 @@
     "react": "^0.13.2",
     "react-document-title": "^1.0.2",
     "react-router": "^0.13.2",
+    "selectn": "^0.9.6",
     "superagent": "^1.2.0"
   }
 }

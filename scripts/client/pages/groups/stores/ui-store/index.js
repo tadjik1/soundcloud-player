@@ -4,17 +4,16 @@ class GroupsPageStore extends Store {
   constructor() {
     super();
 
-    this.state = {
+    this.props = {
       title: 'Find interesting groups',
       placeholder: 'Enter group title',
-      query: ''
+      url: '/groups'
     };
   };
 
   getProps() {
-    return this.state;
+    return this.props;
   };
 }
 
 export default new GroupsPageStore();
-

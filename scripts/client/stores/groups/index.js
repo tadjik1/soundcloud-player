@@ -1,75 +1,60 @@
 import AppDispatcher from 'dispatcher/AppDispatcher';
 import ActionTypes from 'constants/ActionTypes/GroupActionTypes';
 import Store from '../Store';
-import { Map, Set } from 'immutable';
 
 const data = Symbol();
-/**
- * function for paring plain javascript array with groups to immutable map
- * with {groupId: group, ...} structure
- * @param groups {Array} - array with groups
- * @returns {{groups: Object, ids: {}}}
- */
-let parseGroups = (groups) => {
-  let objWithGroups = {};
-  let arrWithIds = [];
-
-  groups.forEach((group) => {
-    objWithGroups[group.id] = group;
-    arrWithIds.push('' + group.id);
-  });
-
-  return {
-    groups: new Map(objWithGroups),
-    ids: arrWithIds
-  };
-};
 
 class GroupsStore extends Store {
   constructor() {
     super();
 
     this[data] = {};
-    this[data].groups = new Map(); // hash {id: group}
-    this[data].searched = new Map(); // hash {query:[...ids])
-    this[data].inProcess = new Set(); // [...queries]
+    this[data].groups = {}; // hash {id: group}
+    this[data].searched = {}; // hash {query:[...ids])
+    this[data].inProcess = []; // [...queries]
   };
 
   alreadySearched(query) {
-    return this[data].searched.has(query);
+    return Object.keys(this[data].searched).indexOf(query) !== -1;
+  };
+
+  isExpectingGroups(query) {
+    return this[data].inProcess.indexOf(query) !== -1;
   };
 
   getGroupsByQuery(query) {
     if (!this.alreadySearched(query)) return [];
 
-    return this[data].searched.get(query).map((id) => {
-      return this[data].groups.get(id);
+    return this[data].searched[query].map((id) => {
+      return this[data].groups[id];
     });
-  };
-
-  isExpectingGroups(query) {
-    return this[data].inProcess.has(query);
   };
 }
 
 let groupsStore = new GroupsStore();
+let removeQuery = (arr, query) => {
+  const index = arr.indexOf(query);
+  if (index !== -1) {
+    arr.splice(index, 1);
+  }
+};
 
 groupsStore.dispatchToken = AppDispatcher.register((payload) => {
   const { action } = payload;
   switch (action.type) {
     case ActionTypes.REQUEST_GROUPS:
-      groupsStore[data].inProcess = groupsStore[data].inProcess.add(action.query);
+      groupsStore[data].inProcess.push(action.query);
       groupsStore.emitChange();
       break;
     case ActionTypes.REQUEST_GROUPS_SUCCESS:
-      groupsStore[data].inProcess = groupsStore[data].inProcess.delete(action.query);
-      const { groups, ids } = parseGroups(action.groups);
-      groupsStore[data].groups = groupsStore[data].groups.merge(groups);
-      groupsStore[data].searched = groupsStore[data].searched.set(action.query, ids);
+      removeQuery(groupsStore[data].inProcess, action.query);
+      const { result } = action;
+      groupsStore[data].groups = Object.assign(groupsStore[data].groups, result.entities.groups);
+      groupsStore[data].searched[action.query] = result.result;
       groupsStore.emitChange();
       break;
     case ActionTypes.REQUEST_GROUPS_ERROR:
-      groupsStore[data].inProcess = groupsStore[data].inProcess.delete(action.query);
+      removeQuery(groupsStore[data].inProcess, action.query);
       groupsStore.emitChange();
       break;
     default:

@@ -5,10 +5,9 @@ import { normalizeGroupArrayResponse } from 'utils/APIUtils/group';
 
 export default {
   handleGroupsSuccess(groups, query) {
-    console.log(normalizeGroupArrayResponse(groups)); //TODO: need to implement this parsing
     AppDispatcher.handleServerAction({
       type: ActionTypes.REQUEST_GROUPS_SUCCESS,
-      groups,
+      result: normalizeGroupArrayResponse(groups),
       query
     });
   },

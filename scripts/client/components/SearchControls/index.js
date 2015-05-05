@@ -1,29 +1,30 @@
 import React, { Component, PropTypes } from 'react';
-import exposeRouter from 'utils/HigherOrderComponents/exposeRouter';
 
 let parseQuery = (query) => {
   return query.replace(/\s+/g, ' ').trim();
 };
 
-class SearchControls extends Component {
+export default class SearchControls extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    query: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {q: props.query};
   };
 
-  static propTypes = {
-    router: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    query: PropTypes.string.isRequired
-  };
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.query !== this.state.q) {
-      this.setState({
-        q: nextProps.query || ''
-      });
+    if (this.state.q !== nextProps.q) {
+      this.setState({q: parseQuery(nextProps.query)});
     }
   };
 
@@ -57,7 +58,7 @@ class SearchControls extends Component {
     event.preventDefault();
     const query = parseQuery(this.state.q);
     if (query.length > 1) {
-      this.props.router.transitionTo('/groups?q=' + query);
+      this.context.router.transitionTo(this.props.url + '?q=' + query);
     }
   };
 
@@ -65,5 +66,3 @@ class SearchControls extends Component {
     this.setState({q: event.target.value});
   };
 }
-
-export default exposeRouter(SearchControls);
