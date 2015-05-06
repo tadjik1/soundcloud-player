@@ -23,8 +23,8 @@ export default class SearchControls extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.q !== nextProps.q) {
-      this.setState({q: parseQuery(nextProps.query)});
+    if (this.state.q !== nextProps.query) {
+      this.setState({q: nextProps.query});
     }
   };
 
