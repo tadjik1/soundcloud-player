@@ -1,8 +1,11 @@
 import 'babel/polyfill';
 import React from 'react';
 import Router from 'react-router';
-
+import { FluxComponent } from 'flummox';
+import Flux from './AppFlux';
 import routes from './routes';
+
+const flux = new Flux();
 
 const router = Router.create({
   routes: routes,
@@ -24,7 +27,9 @@ SC.initialize(SCInitializeParams);
 
 router.run((Handler, state) => {
   React.render(
-    <Handler {...state} />,
+    <FluxComponent flux={flux}>
+      <Handler {...state} />
+    </FluxComponent>,
     document.getElementById('app')
   );
 });

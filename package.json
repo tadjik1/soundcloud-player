@@ -46,6 +46,7 @@
   "dependencies": {
     "bootstrap": "^3.3.4",
     "eventemitter3": "^1.0.1",
+    "flummox": "^4.0.0-alpha2",
     "flux": "^2.0.1",
     "immutable": "^3.7.2",
     "keymirror": "^0.1.1",

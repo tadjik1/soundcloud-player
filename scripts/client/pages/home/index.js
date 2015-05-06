@@ -1,17 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import { connect as connectToStores } from 'flummox';
 
-export default class HomePage extends Component {
-
-  constructor(props) {
-    super(props);
-  };
-
-  static propTypes = {
-    path: PropTypes.string.isRequired,
-    pathname: PropTypes.string.isRequired
-  };
-
+class HomePage extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="clearfix">
         <h1 className="tac title">
@@ -29,3 +21,11 @@ export default class HomePage extends Component {
     );
   };
 }
+
+HomePage = connectToStores(HomePage, {
+  groups: store => ({
+    group: store.getGroup(1)
+  })
+});
+
+export default HomePage;
