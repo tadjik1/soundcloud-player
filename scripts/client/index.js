@@ -1,16 +1,10 @@
 import 'babel/polyfill';
 import React from 'react';
-import Router from 'react-router';
-import { FluxComponent } from 'flummox';
-import Flux from './AppFlux';
-import routes from './routes';
+import router from './router';
+import FluxComponent from 'flummox/component';
+import AppFlux from './AppFlux';
 
-const flux = new Flux();
-
-const router = Router.create({
-  routes: routes,
-  location: Router.HistoryLocation
-});
+const flux = new AppFlux();
 
 let SCInitializeParams = {
   client_id: '8245587a488fdb47747133be16133e4f',

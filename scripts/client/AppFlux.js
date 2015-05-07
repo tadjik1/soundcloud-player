@@ -1,12 +1,12 @@
-import { Flummox } from 'flummox';
-import GroupActions from 'actions/GroupActions';
-import GroupsStore from 'stores/GroupsStore';
+import { Flux } from 'flummox';
+import UsersActions from 'actions/UsersActions';
+import UsersStore from 'stores/UsersStore';
 
 export default class AppFlux extends Flux {
   constructor() {
     super();
 
-    const groupActions = this.createActions('groups', GroupActions);
-    this.createStore('groups', GroupsStore, { groupActions });
+    this.createActions('users', UsersActions, this);
+    this.createStore('users', UsersStore, this);
   }
 }

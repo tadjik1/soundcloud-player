@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class LoginPage extends React.Component {
+export default class LoginPage extends Component {
   constructor() {
     super();
 

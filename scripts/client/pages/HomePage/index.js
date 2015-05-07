@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect as connectToStores } from 'flummox';
 
-class HomePage extends Component {
+export default class HomePage extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="clearfix">
         <h1 className="tac title">
@@ -21,11 +19,3 @@ class HomePage extends Component {
     );
   };
 }
-
-HomePage = connectToStores(HomePage, {
-  groups: store => ({
-    group: store.getGroup(1)
-  })
-});
-
-export default HomePage;

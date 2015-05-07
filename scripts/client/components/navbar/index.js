@@ -1,12 +1,7 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 export default class Navbar extends Component {
-  static propTypes = {
-    path: PropTypes.string.isRequired,
-    pathname: PropTypes.string.isRequired
-  };
-
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">
