@@ -8,5 +8,5 @@ export default class AppFlux extends Flux {
 
     this.createActions('users', UsersActions, this);
     this.createStore('users', UsersStore, this);
-  }
+  };
 }

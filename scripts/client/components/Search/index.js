@@ -32,6 +32,12 @@ export default class Search extends Component {
     };
   };
 
+  componentWillReceiveProps({ q }) {
+    if (q !== this.state.q) {
+      this.setState({ q });
+    }
+  };
+
   render() {
     return (
       <div className="jumbotron search-controls">
@@ -49,7 +55,8 @@ export default class Search extends Component {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary col-md-2">Search</button>
+                className="btn btn-primary col-md-2"
+                disabled={this.state.q.length < 3}>Search</button>
             </form>
           </div>
         </div>

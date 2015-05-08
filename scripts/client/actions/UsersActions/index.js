@@ -16,5 +16,5 @@ export default class UsersActions extends Actions {
     };
     if (isInProcess || isAlreadySearched) return;
     return UsersAPI.search(query);
-  }
+  };
 }

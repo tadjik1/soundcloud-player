@@ -8,10 +8,10 @@ export default class Users extends Component {
 
     return (
       <div className="search-results">
-        {users.map(user => <User user={user} key={user.id} />)}
+        {users.map(this.renderUser)}
 
         {alreadySearched && isEmpty &&
-          <h2>There are no users with this name</h2>
+          <h2>There are no users with {this.props.q} name</h2>
         }
 
         {isInProcess &&
@@ -23,5 +23,9 @@ export default class Users extends Component {
         }
       </div>
     );
+  };
+
+  renderUser(user) {
+    return <User user={user} key={user.id} />;
   };
 }

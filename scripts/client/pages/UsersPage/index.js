@@ -33,11 +33,13 @@ export default class UsersPage extends Component {
       <DocumentTitle title="SoundCloud Replica Search">
         <div className="groups">
           <Search q={this.state.q} />
-          <FluxComponent connectToStores={{
-            users: store => ({
-              users: store.getUsers(this.state.q)
-            })
-          }}>
+          <FluxComponent
+            q={this.state.q}
+            connectToStores={{
+              users: store => ({
+                users: store.getUsers(this.state.q)
+              })
+            }}>
             <Users />
           </FluxComponent>
         </div>

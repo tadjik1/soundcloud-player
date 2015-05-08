@@ -5,5 +5,5 @@ export default class NotfoundPage extends React.Component {
     return (
       <h1>Sorry, the page you are looking doesn't exist.</h1>
     );
-  }
+  };
 }
