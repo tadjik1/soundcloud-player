@@ -1,8 +1,9 @@
 import 'babel/polyfill';
+
 import React from 'react';
-import router from './router';
 import FluxComponent from 'flummox/component';
-import AppFlux from './AppFlux';
+import router from '../shared/router';
+import AppFlux from '../shared/AppFlux';
 
 const flux = new AppFlux();
 

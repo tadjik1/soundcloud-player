@@ -1,16 +1,15 @@
 'use strict';
 
 var path = require('path');
+var _ = require('lodash');
 
-module.exports = {
+var config = {
   devtool: 'source-map',
-  entry: [
-    './scripts/client/index.js'
-  ],
+
   output: {
-    path: __dirname + '/build',
-    filename: 'client.js'
+    path: __dirname + '/build'
   },
+
   module: {
     preLoaders: [
       {
@@ -28,7 +27,26 @@ module.exports = {
     ]
   },
   resolve: {
-    root: path.resolve(__dirname, './scripts/client'),
+    root: path.resolve(__dirname, './scripts/shared'),
     extensions: ['', '.js']
   }
 };
+
+var clientConfig = _.merge({}, config, {
+  entry: './scripts/client/index.js',
+  output: {
+    filename: 'client.js'
+  }
+});
+
+var serverConfig = _.merge({}, config, {
+  entry: './scripts/server/index.js',
+  output: {
+    filename: 'server.js',
+    libraryTarget: 'commonjs2'
+  },
+  target: 'node',
+  externals: /^[a-z\-0-9]+$/
+});
+
+module.exports = [clientConfig, serverConfig];

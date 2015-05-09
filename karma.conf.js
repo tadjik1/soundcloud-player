@@ -10,10 +10,10 @@ module.exports = function (config) {
     ],
     'browsers': ['Firefox'],
     'files': [
-      'scripts/client/**/*-test.js'
+      'scripts/shared/**/*-test.js'
     ],
     'preprocessors': {
-      'scripts/client/**/*-test.js': ['webpack']
+      'scripts/shared/**/*-test.js': ['webpack']
     },
     'webpackMiddleware': {'noInfo': true},
     'reporters': [
@@ -65,7 +65,7 @@ module.exports = function (config) {
         ]
       },
       resolve: {
-        root: path.resolve(__dirname, './scripts/client'),
+        root: path.resolve(__dirname, './scripts/shared'),
         extensions: ['', '.js']
       }
     },
