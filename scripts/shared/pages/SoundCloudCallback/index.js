@@ -1,6 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export default class LoginPage extends Component {
+  static propTypes = {
+    flux: PropTypes.any
+  };
+
+  static contextTypes = {
+    flux: PropTypes.any
+  };
+
   constructor() {
     super();
 

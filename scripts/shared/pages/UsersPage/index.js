@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import FluxComponent from 'flummox/component';
 import DocumentTitle from 'react-document-title';
 import Search from 'components/Search';
 import Users from 'components/Users';
 
 export default class UsersPage extends Component {
+  static propTypes = {
+    flux: PropTypes.any
+  };
+
+  static contextTypes = {
+    flux: PropTypes.any
+  };
+
   constructor(props) {
     super(props);
 

@@ -7,7 +7,12 @@ export default class User extends Component {
       id: PropTypes.string.isRequired,
       avatar_url: PropTypes.string.isRequired,
       username: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    flux: PropTypes.any
+  };
+
+  static contextTypes = {
+    flux: PropTypes.any
   };
 
   render() {
