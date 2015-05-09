@@ -9,12 +9,7 @@ export default class AppHandler extends Component {
     flux: PropTypes.any
   };
 
-  static propTypes = {
-    flux: PropTypes.any
-  };
-
   render() {
-    console.log(this.props, this.context);
     return (
       <div>
         <div className="container-fluid">

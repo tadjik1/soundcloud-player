@@ -14,27 +14,17 @@ export default function(app) {
   app.use(function* appHandler() {
     const flux = new AppFlux();
 
-    const router = Router.create({
-      routes: routes,
-      location: this.url,
-      onError: error => {
-        throw error;
-      }
-    });
-
-    let appString;
-
     try {
-      router.run((Handler, state) => {
-        appString = React.renderToString(
+      Router.run(routes, this.url, (Root, state) => {
+        const html = React.renderToString(
           <FluxComponent flux={flux}>
-            <Handler {...state} />
+            <Root {...state} />
           </FluxComponent>
         );
 
-        this.body = template({
-          body: appString
-        });
+        console.log(html);
+
+        this.body = 'lala';
       });
     } catch (error) {
       throw error;

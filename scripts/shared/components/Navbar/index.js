@@ -1,15 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 export default class Navbar extends Component {
-  static contextTypes = {
-    flux: PropTypes.any
-  };
-
-  static propTypes = {
-    flux: PropTypes.any
-  };
-
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">

@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import User from 'components/User';
 
 export default class Users extends Component {
-  static contextTypes = {
-    flux: PropTypes.any
-  };
-
   static propTypes = {
-    flux: PropTypes.any
+    users: PropTypes.shape({
+      isInProcess: PropTypes.bool.isRequired,
+      alreadySearched: PropTypes.bool.isRequired,
+      users: PropTypes.array.isRequired
+    }).isRequired
   };
 
   render() {

@@ -1,14 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default class Footer extends Component {
-  static contextTypes = {
-    flux: PropTypes.any
-  };
-
-  static propTypes = {
-    flux: PropTypes.any
-  };
-
   render() {
     const yearsRange = this.getYearsRange(new Date());
     return (

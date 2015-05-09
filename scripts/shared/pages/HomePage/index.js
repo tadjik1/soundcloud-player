@@ -1,14 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default class HomePage extends Component {
-  static propTypes = {
-    flux: PropTypes.any
-  };
-
-  static contextTypes = {
-    flux: PropTypes.any
-  };
-
   render() {
     return (
       <div className="clearfix">

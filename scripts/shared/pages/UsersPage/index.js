@@ -6,11 +6,9 @@ import Users from 'components/Users';
 
 export default class UsersPage extends Component {
   static propTypes = {
-    flux: PropTypes.any
-  };
-
-  static contextTypes = {
-    flux: PropTypes.any
+    query: PropTypes.shape({
+      q: PropTypes.string
+    }).isRequired
   };
 
   constructor(props) {
