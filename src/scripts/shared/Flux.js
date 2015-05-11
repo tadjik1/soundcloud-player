@@ -1,8 +1,8 @@
-import { Flux } from 'flummox';
+import { Flummox } from 'flummox';
 import UsersActions from './actions/UsersActions';
 import UsersStore from './stores/UsersStore';
 
-export default class AppFlux extends Flux {
+export default class Flux extends Flummox {
   constructor() {
     super();
 

@@ -3,9 +3,9 @@ import 'babel/polyfill';
 import React from 'react';
 import FluxComponent from 'flummox/component';
 import router from '../shared/router';
-import AppFlux from '../shared/AppFlux';
+import Flux from '../shared/Flux';
 
-const flux = new AppFlux();
+const flux = new Flux();
 
 let SCInitializeParams = {
   client_id: '8245587a488fdb47747133be16133e4f',

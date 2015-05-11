@@ -6,7 +6,7 @@ export default class Users extends Component {
     users: PropTypes.shape({
       isInProcess: PropTypes.bool.isRequired,
       alreadySearched: PropTypes.bool.isRequired,
-      users: PropTypes.array.isRequired
+      users: PropTypes.array
     }).isRequired
   };
 

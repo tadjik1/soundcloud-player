@@ -19,7 +19,7 @@ This run all of your tests with karma in phantomjs.
 ```bash
 gulp build
 ```
-This build all of your project into single file build/client.js
+This command build project into 'build' folde
 
 ###Development
 ```bash

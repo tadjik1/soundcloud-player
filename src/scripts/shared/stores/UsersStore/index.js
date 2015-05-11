@@ -19,9 +19,7 @@ export default class UsersStore extends Store {
     };
   };
 
-  handleBeginSearch(action) {
-    const { actionArgs } = action;
-    const query = actionArgs[0];
+  handleBeginSearch(query) {
     this.state.inProcess.push(query);
     this.setState(this.state);
   };
