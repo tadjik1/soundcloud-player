@@ -24,17 +24,21 @@ app.use(function* appHandler() {
   const flux = new AppFlux();
 
   try {
-    Router.run(routes, this.url, (Root, state) => {
-      const html = React.renderToString(
-        <FluxComponent flux={flux}>
-          <Root {...state} />
-        </FluxComponent>
-      );
-
-      this.body = template({
-        title: 'hello',
-        body: html
+    const { Handler, state } = yield new Promise((resolve) => {
+      Router.run(routes, this.url, (_Handler, _state) => {
+        resolve({ Handler: _Handler, state: _state });
       });
+    });
+
+    const html = React.renderToString(
+      <FluxComponent flux={flux}>
+        <Handler {...state} />
+      </FluxComponent>
+    );
+
+    this.body = template({
+      title: 'hello',
+      body: html
     });
   } catch (error) {
     throw error;
