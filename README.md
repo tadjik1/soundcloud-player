@@ -17,12 +17,12 @@ This run all of your tests with karma in phantomjs.
 
 ###Build
 ```bash
-npm run build
+gulp build
 ```
-This build all of your project into single file build/client.js
+This command build project into 'build' folde
 
 ###Development
 ```bash
-npm start
+gulp
 ```
-This runs web-server on localhost:3000 for developing. It would track all of your changes.
+This runs web-server on 127.0.0.1:3000 for developing. It would track all of your changes.

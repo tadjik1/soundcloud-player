@@ -10,10 +10,10 @@ module.exports = function (config) {
     ],
     'browsers': ['Firefox'],
     'files': [
-      'scripts/client/**/*-test.js'
+      'src/scripts/shared/**/*-test.js'
     ],
     'preprocessors': {
-      'scripts/client/**/*-test.js': ['webpack']
+      'src/scripts/shared/**/*-test.js': ['webpack']
     },
     'webpackMiddleware': {'noInfo': true},
     'reporters': [
@@ -40,7 +40,7 @@ module.exports = function (config) {
       ]
     },
     'webpack': {
-      'entry': './scripts/client/index.js',
+      'entry': './src/scripts/client/index.js',
       'debug': true,
       'devtool': 'source-map',
       'output': {
@@ -65,7 +65,6 @@ module.exports = function (config) {
         ]
       },
       resolve: {
-        root: path.resolve(__dirname, './scripts/client'),
         extensions: ['', '.js']
       }
     },
