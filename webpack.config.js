@@ -1,13 +1,38 @@
 'use strict';
 
-var path = require('path');
 var _ = require('lodash');
+var webpack = require('webpack');
+var argv = require('minimist')(process.argv.slice(2));
+
+var DEBUG = !argv.release;
+
+var GLOBALS = {
+  'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
+  '__DEV__': DEBUG
+};
 
 var config = {
-  devtool: 'source-map',
-
   output: {
-    path: __dirname + '/build'
+    path: './build/',
+    publicPath: './',
+    sourcePrefix: '  '
+  },
+
+  cache: DEBUG,
+  debug: DEBUG,
+  devtool: DEBUG ? '#inline-source-map' : false,
+
+  stats: {
+    colors: true,
+    reasons: DEBUG
+  },
+
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin()
+  ],
+
+  resolve: {
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
   },
 
   module: {
@@ -18,35 +43,59 @@ var config = {
         loader: 'eslint-loader'
       }
     ],
+
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
     ]
-  },
-  resolve: {
-    root: path.resolve(__dirname, './scripts/shared'),
-    extensions: ['', '.js']
   }
 };
 
-var clientConfig = _.merge({}, config, {
-  entry: './scripts/client/index.js',
+//
+// Configuration for the client-side bundle (client.js)
+// -----------------------------------------------------------------------------
+
+var appConfig = _.merge({}, config, {
+  entry: './src/scripts/client/index.js',
   output: {
-    filename: 'client.js'
-  }
+    filename: 'public/assets/js/client.js'
+  },
+  plugins: config.plugins.concat([
+      new webpack.DefinePlugin(_.merge(GLOBALS, {'__SERVER__': false}))
+    ].concat(DEBUG ? [] : [
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.AggressiveMergingPlugin()
+      ])
+  )
 });
 
+//
+// Configuration for the server-side bundle (server.js)
+// -----------------------------------------------------------------------------
+
 var serverConfig = _.merge({}, config, {
-  entry: './scripts/server/index.js',
+  entry: './src/scripts/server/index.js',
   output: {
     filename: 'server.js',
     libraryTarget: 'commonjs2'
   },
   target: 'node',
-  externals: /^[a-z\-0-9]+$/
+  externals: /^[a-z][a-z\.\-0-9]*$/,
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false
+  },
+  plugins: config.plugins.concat(
+    new webpack.DefinePlugin(_.merge(GLOBALS, {'__SERVER__': true}))
+  )
 });
 
-module.exports = [clientConfig, serverConfig];
+module.exports = [appConfig, serverConfig];

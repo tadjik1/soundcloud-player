@@ -1,0 +1,49 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+
+
+/* TEAM */
+
+
+Your title:
+
+
+Site:
+
+
+Twitter:
+
+
+Location:
+
+
+
+                        [...]
+
+
+
+/* THANKS */
+
+
+Name:
+
+
+
+                        [...]
+
+
+
+/* SITE */
+
+
+Last update:
+
+
+Standards: HTML5, CSS3
+
+
+Components: Reactjs, Flummox
+
+
+Software: IDE Webstorm, iojs, webpack
