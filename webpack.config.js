@@ -32,7 +32,7 @@ var config = {
   ],
 
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
+    extensions: ['', '.js']
   },
 
   module: {
@@ -46,7 +46,7 @@ var config = {
 
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
@@ -84,7 +84,7 @@ var serverConfig = _.merge({}, config, {
     libraryTarget: 'commonjs2'
   },
   target: 'node',
-  externals: /^[a-z][a-z\.\-0-9]*$/,
+  externals: /^[a-z][a-z\.\-0-9\/]*$/,
   node: {
     console: false,
     global: false,
