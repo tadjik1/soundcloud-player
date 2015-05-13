@@ -18,7 +18,7 @@ const template = _.template(fs.readFileSync(templateFile, 'utf8'));
 const app = koa();
 const port = process.env.PORT || 5000;
 
-app.use(favicon('favicon.ico'));
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use(serve(path.join(__dirname, 'public')));
 app.use(function* appHandler() {
   const flux = new Flux();
