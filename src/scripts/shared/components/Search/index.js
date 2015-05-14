@@ -44,10 +44,11 @@ export default class Search extends Component {
         <div className="container-fluid">
           <h2>Find interesting persons</h2>
           <div className="row">
-            <form className="form-inline" onSubmit={this.onFormSubmit}>
+            <form className="form-inline" onSubmit={this.onFormSubmit} method="GET" action="/users">
               <div className="form-group col-md-10">
                 <input
                   type="text"
+                  name="q"
                   className="form-control search-controls__query"
                   value={this.state.q}
                   onChange={this.onQueryChange}

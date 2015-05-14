@@ -11,6 +11,7 @@ import FluxComponent from 'flummox/component';
 import Router from 'react-router';
 import routes from '../shared/routes';
 import Flux from '../shared/Flux';
+import initApp from '../shared/init';
 
 const templateFile = path.join(__dirname, 'views/index.html');
 const template = _.template(fs.readFileSync(templateFile, 'utf8'));
@@ -22,6 +23,8 @@ app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use(serve(path.join(__dirname, 'public')));
 app.use(function* appHandler() {
   const flux = new Flux();
+
+  initApp();
 
   const router = Router.create({
     routes: routes,
@@ -43,19 +46,25 @@ app.use(function* appHandler() {
       });
     });
 
+    yield state.routes.map((route) => {
+    //  call willRender on all routes to get async data
+      return route.handler.willRender && route.handler.willRender(flux, state);
+    }).filter(Boolean);
+
     html = React.renderToString(
       <FluxComponent flux={flux}>
         <Handler {...state} />
       </FluxComponent>
     );
+
+    this.body = template({
+      title: 'hello',
+      body: html,
+      flux: flux.serialize()
+    });
   } catch (error) {
     throw error;
   }
-
-  this.body = template({
-    title: 'hello',
-    body: html
-  });
 });
 
 app.listen(port, () => {

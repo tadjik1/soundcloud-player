@@ -19,6 +19,14 @@ export default class UsersStore extends Store {
     };
   };
 
+  static serialize(state) {
+    return JSON.stringify(state);
+  };
+
+  static deserialize(state) {
+    return JSON.parse(state);
+  };
+
   handleBeginSearch(query) {
     this.state.inProcess.push(query);
     this.setState(this.state);

@@ -1,8 +1,10 @@
+import SC from './SouncloudAPI';
+
 const defaultParams = {
 };
 
 export default {
-  async get(path, options = {}) {
+  get(path, options = {}) {
     return new Promise((resolve, reject) => {
       SC.get(path, Object.assign({}, defaultParams, options), (res, err) => {
         if (err) {

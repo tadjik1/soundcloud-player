@@ -13,6 +13,10 @@ export default class UsersPage extends Component {
     flux: PropTypes.instanceOf(Flux).isRequired
   };
 
+  static willRender(flux, state) {
+    return flux.getActions('users').searchUsers(state.query.q);
+  };
+
   constructor(props) {
     super(props);
 
