@@ -31,13 +31,46 @@ gulp.task('vendor', function() {
 // Static files
 gulp.task('assets', function() {
   src.assets = [
-    'src/assets/**',
-    'src/views*/**/*.*'
+    'src/assets/**'
   ];
   return gulp.src(src.assets)
-    .pipe($.changed('build'))
-    .pipe(gulp.dest('build'))
+    .pipe($.changed('build/public'))
+    .pipe(gulp.dest('build/public'))
     .pipe($.size({title: 'assets'}));
+});
+
+//html
+gulp.task('html:node', function () {
+  src.assets = [
+    'src/views/index.jade'
+  ];
+  return gulp.src(src.assets)
+    .pipe($.jade({
+      locals: {
+        env: 'nodejs'
+      }
+    }))
+    .pipe($.rename('views/index-nodejs.html'))
+    .pipe(gulp.dest('build'))
+    .pipe($.size({title: 'html'}));
+});
+
+gulp.task('html:nginx', function () {
+  src.assets = [
+    'src/views/index.jade'
+  ];
+  return gulp.src(src.assets)
+    .pipe($.jade({
+      locals: {
+        env: 'nginx'
+      }
+    }))
+    .pipe(gulp.dest('build/views'))
+    .pipe($.size({title: 'html'}));
+});
+
+gulp.task('html', function (cb) {
+  runSequence(['html:node', 'html:nginx'], cb);
 });
 
 //Styles
@@ -91,7 +124,7 @@ gulp.task('bundle', function(cb) {
 
 // Build the app from source code
 gulp.task('build', ['clean'], function(cb) {
-  runSequence(['vendor', 'assets'], ['styles', 'images', 'bundle'], cb);
+  runSequence(['vendor', 'assets'], ['styles', 'html', 'images', 'bundle'], cb);
 });
 
 // Build and start watching for modifications

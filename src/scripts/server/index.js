@@ -13,13 +13,13 @@ import routes from '../shared/routes';
 import Flux from '../shared/Flux';
 import initApp from '../shared/init';
 
-const templateFile = path.join(__dirname, 'views/index.html');
+const templateFile = path.join(__dirname, 'views/index-nodejs.html');
 const template = _.template(fs.readFileSync(templateFile, 'utf8'));
 
 const app = koa();
 const port = process.env.PORT || 5000;
 
-app.use(favicon(path.join(__dirname, 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use(serve(path.join(__dirname, 'public')));
 app.use(function* appHandler() {
   const flux = new Flux();

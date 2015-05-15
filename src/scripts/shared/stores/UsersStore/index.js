@@ -13,7 +13,7 @@ export default class UsersStore extends Store {
     );
 
     this.state = {
-      users: [],
+      users: {},
       searched: {},
       inProcess: []
     };

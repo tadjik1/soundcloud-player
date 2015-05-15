@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    title
+      if env === 'nodejs'
+        <%- title %>
+      else
+        | SoundCloud Replica
+    link(rel='icon', href='favicon.ico')
+    meta(name='viewport', content='width=device-width', initial-scale='1')
+    link(rel='stylesheet', href='/assets/css/index.css')
+  body
+    <!--[if IE 9]>
+    p(class='browserupgrade')
+      | You are using an
+      strong  outdated
+      | browser.
+      | Please
+      a(href='http://browsehappy.com/') upgrade your browser
+      | to improve your experience.
+    <!--<![endif]-->
+    #app
+      if env === 'nodejs'
+        <%= body %>
+
+    script(src='/assets/js/client.js')
+
+    if env === 'nodejs'
+      script.
+        (function (window) {
+          // FLUX
+          try {
+            window.flux = <%= flux %>;
+          } catch (ignore) {}
+        })(this);

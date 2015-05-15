@@ -9,7 +9,9 @@ import initApp from '../shared/init';
 
 document.addEventListener('DOMContentLoaded', () => {
   const flux = new Flux();
-  flux.deserialize(JSON.stringify(window.flux));
+  if (window.flux) {
+    flux.deserialize(JSON.stringify(window.flux));
+  }
   initApp();
 
   router.run((Handler, state) => {
