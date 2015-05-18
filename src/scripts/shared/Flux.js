@@ -6,7 +6,7 @@ export default class Flux extends Flummox {
   constructor() {
     super();
 
-    this.createActions('users', UsersActions, this);
+    this.createActions('users', UsersActions);
     this.createStore('users', UsersStore, this);
   };
 }

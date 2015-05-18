@@ -5,7 +5,13 @@ import stubRouterContext from '../../../utils/testUtils/stubRouterContext';
 import Search from '../index';
 
 const TestUtils = React.addons.TestUtils;
-const Subject = stubRouterContext(Search, { q: 'lo' });
+const Subject = stubRouterContext(Search, {
+  q: 'lo',
+  action: '/someurl',
+  placeholder: 'search',
+  title: 'search',
+  handleSubmit: () => {}
+});
 
 let Component, Input, Button, input, button;
 

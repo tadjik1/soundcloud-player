@@ -59,9 +59,14 @@ export default class UsersPage extends Component {
     return (
       <DocumentTitle title="SoundCloud Replica Search">
         <div className="groups">
+
           <Search
             q={this.state.q}
+            title="Find interesting persons"
+            placeholder="Enter person name"
+            action="/users"
             handleSubmit={this.handleSubmit} />
+
           <FluxComponent
             q={this.state.q}
             connectToStores={{
@@ -73,6 +78,7 @@ export default class UsersPage extends Component {
             }}>
             <Users />
           </FluxComponent>
+
         </div>
       </DocumentTitle>
     );

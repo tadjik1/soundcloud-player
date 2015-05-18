@@ -3,16 +3,10 @@ import React, { PropTypes, Component } from 'react';
 export default class Search extends Component {
   static propTypes = {
     q: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired
-  };
-
-  onQueryChange(event) {
-    this.setState({q: event.target.value});
-  };
-
-  onFormSubmit(e) {
-    e.preventDefault();
-    this.props.handleSubmit(this.state.q);
+    placeholder: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    action: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -24,19 +18,27 @@ export default class Search extends Component {
     this.state = {q: props.q};
   };
 
+  onQueryChange(event) {
+    this.setState({q: event.target.value});
+  };
+
+  onFormSubmit(e) {
+    e.preventDefault();
+
+    this.props.handleSubmit(this.state.q);
+  };
+
   componentWillReceiveProps({ q }) {
-    if (q !== this.state.q) {
-      this.setState({ q });
-    }
+    this.setState({ q });
   };
 
   render() {
     return (
       <div className="jumbotron search-controls">
         <div className="container-fluid">
-          <h2>Find interesting persons</h2>
+          <h2>{this.props.title}</h2>
           <div className="row">
-            <form className="form-inline" onSubmit={this.onFormSubmit} method="GET" action="/users">
+            <form className="form-inline" onSubmit={this.onFormSubmit} method="GET" action={this.props.action}>
               <div className="form-group col-md-10">
                 <input
                   type="text"
@@ -44,8 +46,9 @@ export default class Search extends Component {
                   className="form-control search-controls__query"
                   value={this.state.q}
                   onChange={this.onQueryChange}
-                  placeholder="Enter person name" />
+                  placeholder={this.props.placeholder} />
               </div>
+
               <button
                 type="submit"
                 className="btn btn-primary col-md-2"
