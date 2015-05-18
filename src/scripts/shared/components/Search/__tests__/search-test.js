@@ -13,18 +13,18 @@ const Subject = stubRouterContext(Search, {
   handleSubmit: () => {}
 });
 
-let Component, Input, Button, Form, input, button, form;
+let Component, Input, Button, input, button;
 
 describe('search component test cases', () => {
   before('render and locate element', () => {
     Component = TestUtils.renderIntoDocument(React.createElement(Subject));
     Input = TestUtils.findRenderedDOMComponentWithTag(Component, 'input');
     Button = TestUtils.findRenderedDOMComponentWithTag(Component, 'button');
-    Form = TestUtils.findRenderedDOMComponentWithTag(Component, 'form');
+    // Form = TestUtils.findRenderedDOMComponentWithTag(Component, 'form');
 
     input = Input.getDOMNode();
     button = Button.getDOMNode();
-    form = Form.getDOMNode();
+    // form = Form.getDOMNode();
   });
 
   it('should render input with right type', () => {
