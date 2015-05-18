@@ -6,6 +6,7 @@ export default class UsersStore extends Store {
     super();
 
     const usersActions = flux.getActions('users');
+
     this.registerAsync(usersActions.searchUsers,
       this.handleBeginSearch,
       this.handleSuccessSearch,

@@ -23,6 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   });
 
-// export for http://fb.me/react-devtools
+  // export for http://fb.me/react-devtools
   window.React = React;
 });

@@ -5,6 +5,10 @@ import DocumentTitle from 'react-document-title';
 import Search from '../../components/Search';
 import Users from '../../components/Users';
 
+function pickQuery(props) {
+  return props.query.q || '';
+}
+
 export default class UsersPage extends Component {
   static propTypes = {
     query: PropTypes.shape({
@@ -24,23 +28,20 @@ export default class UsersPage extends Component {
   constructor(props) {
     super(props);
 
+    // it's like a decorator for binding context
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    // shortcuts for a stores and action creators
     this.usersStore = props.flux.getStore('users');
     this.usersActions = props.flux.getActions('users');
-
-    this.state = {
-      q: props.query.q || ''
-    };
   };
 
   componentWillMount() {
-    this.doSearchUsers(this.state.q);
+    this.doSearchUsers(pickQuery(this.props));
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({q: nextProps.query.q || ''});
-    this.doSearchUsers(nextProps.query.q || '');
+    this.doSearchUsers(pickQuery(nextProps));
   };
 
   doSearchUsers(query) {
@@ -56,24 +57,25 @@ export default class UsersPage extends Component {
   };
 
   render() {
+    const query = pickQuery(this.props);
     return (
       <DocumentTitle title="SoundCloud Replica Search">
         <div className="groups">
 
           <Search
-            q={this.state.q}
+            q={query}
             title="Find interesting persons"
             placeholder="Enter person name"
             action="/users"
             handleSubmit={this.handleSubmit} />
 
           <FluxComponent
-            q={this.state.q}
+            q={query}
             connectToStores={{
-              users: store => ({
-                users: store.getUsersByQuery(this.state.q),
-                isAlreadySearched: store.isAlreadySearched(this.state.q),
-                isInProcess: store.isInProcess(this.state.q)
+              users: (store, props) => ({
+                users: store.getUsersByQuery(props.q),
+                isAlreadySearched: store.isAlreadySearched(props.q),
+                isInProcess: store.isInProcess(props.q)
               })
             }}>
             <Users />
