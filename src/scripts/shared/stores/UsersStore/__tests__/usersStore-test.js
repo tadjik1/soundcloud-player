@@ -5,8 +5,8 @@ import { Flux, Actions } from 'flummox';
 
 class MockUsersActions extends Actions {
   searchUsers() {
-    return new Promise((resolve, reject) => resolve())
-  }
+    return new Promise((resolve) => resolve());
+  };
 }
 
 class MockFlux extends Flux {
