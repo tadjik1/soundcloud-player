@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { merge } from 'lodash';
 import { Store } from 'flummox';
 
 export default class UsersStore extends Store {
@@ -29,27 +29,32 @@ export default class UsersStore extends Store {
 
   handleBeginSearch(query) {
     this.state.inProcess.push(query);
-    this.setState(this.state);
+    this.setState();
   };
 
+  /*
+    TODO: decide what to do with this piece of code
+          cause right now it looks like a shit.
+  */
   handleSuccessSearch({ query, response }) {
     this._removeFromProcess(query);
     const { users } = response.entities;
     const { result } = response;
     if (users) {
-      this.state.users = _.merge(this.state.users, users);
       this.state.searched[query] = result;
     } else {
       this.state.searched[query] = [];
     }
-    this.setState(this.state);
+    this.setState({
+      users: merge(this.state.users, users || {})
+    });
   };
 
   handleFailedSearch({ query, err }) {
     console.warn(err);
     this._removeFromProcess(query);
     this.state.searched[query] = [];
-    this.setState(this.state);
+    this.setState();
   };
 
   isInProcess(query) {
@@ -60,12 +65,9 @@ export default class UsersStore extends Store {
     return !!this.state.searched[query];
   };
 
-  getUsers(query) {
-    const isInProcess = this.isInProcess(query);
-    const alreadySearched = this.isAlreadySearched(query);
-    const users = alreadySearched ? this.state.searched[query].map(id => this.state.users[id]) : [];
-
-    return { isInProcess, alreadySearched, users };
+  getUsersByQuery(query) {
+    const ids = this.state.searched[query] || [];
+    return ids.map(id => this.state.users[id]);
   };
 
   _removeFromProcess(query) {

@@ -9,6 +9,7 @@ import _ from 'lodash';
 import React from 'react';
 import FluxComponent from 'flummox/component';
 import Router from 'react-router';
+import DocumentTitle from 'react-document-title';
 import routes from '../shared/routes';
 import Flux from '../shared/Flux';
 import initApp from '../shared/init';
@@ -58,7 +59,7 @@ app.use(function* appHandler() {
     );
 
     this.body = template({
-      title: 'hello',
+      title: DocumentTitle.rewind(),
       body: html,
       flux: flux.serialize()
     });

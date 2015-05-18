@@ -20,6 +20,9 @@ export default class UsersPage extends Component {
   constructor(props) {
     super(props);
 
+    this.usersStore = props.flux.getStore('users');
+    this.usersActions = props.flux.getActions('users');
+
     this.state = {
       q: props.query.q || ''
     };
@@ -35,8 +38,8 @@ export default class UsersPage extends Component {
   };
 
   doSearchUsers(query) {
-    if (query !== '') {
-      this.props.flux.getActions('users').searchUsers(query);
+    if (query && !this.usersStore.isAlreadySearched(query)) {
+      this.usersActions.searchUsers(query);
     }
   };
 
@@ -49,7 +52,9 @@ export default class UsersPage extends Component {
             q={this.state.q}
             connectToStores={{
               users: store => ({
-                users: store.getUsers(this.state.q)
+                users: store.getUsersByQuery(this.state.q),
+                isAlreadySearched: store.isAlreadySearched(this.state.q),
+                isInProcess: store.isInProcess(this.state.q)
               })
             }}>
             <Users />

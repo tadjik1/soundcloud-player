@@ -56,7 +56,8 @@ export default class Search extends Component {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary col-md-2">Search</button>
+                className="btn btn-primary col-md-2"
+                disabled={this.state.q.length < 3}>Search</button>
             </form>
           </div>
         </div>

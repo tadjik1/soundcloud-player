@@ -1,6 +1,7 @@
 import SC from './SouncloudAPI';
 
 const defaultParams = {
+  limit: 10
 };
 
 export default {
