@@ -54,7 +54,6 @@ export default class UsersStore extends Store {
   handleFailedSearch({ query, err }) {
     console.warn(err);
     this._removeFromProcess(query);
-    this.state.searched[query] = [];
     this.setState();
   };
 
