@@ -1,14 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 
 export default class Search extends Component {
-  static propTypes = {
-    q: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    action: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  };
-
   constructor(props) {
     super(props);
 
@@ -29,7 +21,13 @@ export default class Search extends Component {
   };
 
   componentWillReceiveProps({ q }) {
-    this.setState({ q });
+    if (q !== this.state.q) {
+      this.setState({ q });
+    }
+  };
+
+  shouldComponentUpdate({ q }) {
+    return q !== this.state.q;
   };
 
   render() {

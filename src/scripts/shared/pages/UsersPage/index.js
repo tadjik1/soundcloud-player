@@ -62,12 +62,18 @@ export default class UsersPage extends Component {
       <DocumentTitle title="SoundCloud Replica Search">
         <div className="groups">
 
-          <Search
+          <FluxComponent
             q={query}
-            title="Find interesting persons"
-            placeholder="Enter person name"
-            action="/users"
-            handleSubmit={this.handleSubmit} />
+            handleSubmit={this.handleSubmit}
+            connectToStores={{
+              usersPage: (store) => ({
+                title: store.getTitle(),
+                placeholder: store.getPlaceholder(),
+                action: store.getAction()
+              })
+            }}>
+            <Search />
+          </FluxComponent>
 
           <FluxComponent
             q={query}
