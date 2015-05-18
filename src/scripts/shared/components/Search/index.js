@@ -2,34 +2,26 @@ import React, { PropTypes, Component } from 'react';
 
 export default class Search extends Component {
   static propTypes = {
-    q: PropTypes.string.isRequired
+    q: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired
   };
 
-  static contextTypes = {
-    router: PropTypes.func.isRequired
-  };
-
-  static _onQueryChange(event) {
+  onQueryChange(event) {
     this.setState({q: event.target.value});
   };
 
-  static _onFormSubmit(e) {
+  onFormSubmit(e) {
     e.preventDefault();
-
-    if (this.state.q.length > 1) {
-      this.context.router.transitionTo('/users?q=' + this.state.q);
-    }
+    this.props.handleSubmit(this.state.q);
   };
 
   constructor(props) {
     super(props);
 
-    this.onQueryChange = Search._onQueryChange.bind(this);
-    this.onFormSubmit = Search._onFormSubmit.bind(this);
+    this.onQueryChange = this.onQueryChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
 
-    this.state = {
-      q: props.q
-    };
+    this.state = {q: props.q};
   };
 
   componentWillReceiveProps({ q }) {

@@ -13,12 +13,18 @@ export default class UsersPage extends Component {
     flux: PropTypes.instanceOf(Flux).isRequired
   };
 
+  static contextTypes = {
+    router: PropTypes.func.isRequired
+  };
+
   static willRender(flux, state) {
     return flux.getActions('users').searchUsers(state.query.q);
   };
 
   constructor(props) {
     super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.usersStore = props.flux.getStore('users');
     this.usersActions = props.flux.getActions('users');
@@ -43,11 +49,19 @@ export default class UsersPage extends Component {
     }
   };
 
+  handleSubmit(query) {
+    if (query.length > 1) {
+      this.context.router.transitionTo('/users?q=' + query);
+    }
+  };
+
   render() {
     return (
       <DocumentTitle title="SoundCloud Replica Search">
         <div className="groups">
-          <Search q={this.state.q} />
+          <Search
+            q={this.state.q}
+            handleSubmit={this.handleSubmit} />
           <FluxComponent
             q={this.state.q}
             connectToStores={{
