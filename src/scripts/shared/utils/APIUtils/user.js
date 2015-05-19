@@ -13,4 +13,3 @@ export const normalizeUserArrayResponse = (response) => {
     normalize(response, arrayOf(user))
   );
 };
-
