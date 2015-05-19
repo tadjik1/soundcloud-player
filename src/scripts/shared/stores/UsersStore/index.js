@@ -13,6 +13,8 @@ export default class UsersStore extends Store {
       this.handleFailedSearch
     );
 
+    this.register(usersActions.fetchUser, this.handleNewUser);
+
     this.state = {
       users: new Map(),
       searched: new Map(),
@@ -64,6 +66,18 @@ static deserialize(str) {
     });
   };
 
+  handleNewUser({ response }) {
+    const { entities } = response;
+
+    const users = this.state.users.withMutations(map => {
+      Object.keys(entities.users || {}).forEach(id => map.set(Number(id), entities.users[id]));
+    });
+
+    this.setState({
+      users
+    });
+  };
+
   handleFailedSearch({ query, err }) {
     console.warn(err);
     this.setState({
@@ -77,6 +91,14 @@ static deserialize(str) {
 
   isAlreadySearched(query) {
     return this.state.searched.has(query);
+  };
+
+  isAlreadyFetched(userId) {
+    return this.state.users.has(userId);
+  };
+
+  getUserById(userId) {
+    return this.state.users.get(userId);
   };
 
   getUsersByQuery(query) {
