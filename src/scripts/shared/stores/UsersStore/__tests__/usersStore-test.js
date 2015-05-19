@@ -2,6 +2,7 @@
 
 import UsersStore from '../index';
 import { Flux, Actions } from 'flummox';
+import Immutable, { Map, Set, List } from 'immutable';
 
 class MockUsersActions extends Actions {
   searchUsers() {
@@ -16,6 +17,12 @@ class MockFlux extends Flux {
     this.createActions('users', MockUsersActions);
   };
 }
+
+const defaultState = {
+  users: new Map(),
+  searched: new Map(),
+  inProcess: new Set()
+};
 
 const flux = new MockFlux();
 let store;
@@ -44,17 +51,13 @@ describe('users store test cases', () => {
       users: {},
       searched: {},
       inProcess: []
-    }))).to.deep.equal({
-      users: {},
-      searched: {},
-      inProcess: []
-    });
+    }))).to.deep.equal(defaultState);
   });
 
   it('should add "inproccess" entity for request', () => {
     store.handleBeginSearch('lala');
 
-    expect(store.state.inProcess).to.deep.equal(['lala']);
+    expect(store.state.inProcess.has('lala')).to.equal(true);
   });
 
   it('should return true because this request in que', () => {
@@ -64,7 +67,7 @@ describe('users store test cases', () => {
   it('should remove request from "inproccess" entity', () => {
     store.handleFailedSearch({query: 'lala'});
 
-    expect(store.state.inProcess).to.deep.equal([]);
+    expect(store.state.inProcess.has('lala')).to.equal(false);
   });
 
 
@@ -73,7 +76,7 @@ describe('users store test cases', () => {
       store.handleBeginSearch('newQuery');
       store.handleSuccessSearch({query: 'newQuery', response: {
         entities: {},
-        result: {}
+        result: []
       }});
     });
 
@@ -86,7 +89,7 @@ describe('users store test cases', () => {
     });
 
     it('should return empty array of users', () => {
-      expect(store.getUsersByQuery('newQuery')).to.deep.equal([]);
+      expect(Immutable.is(store.getUsersByQuery('newQuery'), new List())).to.equal(true);
     });
   });
 });
