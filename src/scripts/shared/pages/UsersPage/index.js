@@ -60,6 +60,7 @@ export default class UsersPage extends Component {
     const query = pickQuery(this.props);
     return (
       <DocumentTitle title="SoundCloud Replica Search">
+
         <div className="groups">
 
           <FluxComponent
@@ -85,9 +86,11 @@ export default class UsersPage extends Component {
               })
             }}>
             <Users />
+
           </FluxComponent>
 
         </div>
+
       </DocumentTitle>
     );
   };

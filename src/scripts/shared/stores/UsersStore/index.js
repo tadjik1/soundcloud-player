@@ -1,4 +1,4 @@
-import { merge } from 'lodash';
+import { Set, Map, List } from 'immutable';
 import { Store } from 'flummox';
 
 export default class UsersStore extends Store {
@@ -14,23 +14,33 @@ export default class UsersStore extends Store {
     );
 
     this.state = {
-      users: {},
-      searched: {},
-      inProcess: []
+      users: new Map(),
+      searched: new Map(),
+      inProcess: new Set()
     };
   };
 
-  static serialize(state) {
-    return JSON.stringify(state);
-  };
+static serialize(state) {
+  return JSON.stringify({
+    users: state.users.toJS(),
+    searched: state.searched.toJS(),
+    inProcess: state.inProcess.toJS()
+  });
+};
 
-  static deserialize(state) {
-    return JSON.parse(state);
+static deserialize(str) {
+  const state = JSON.parse(str);
+  return {
+    users: new Map(state.users),
+    searched: new Map(state.searched),
+    inProcess: new Set(state.inProcess)
   };
+};
 
   handleBeginSearch(query) {
-    this.state.inProcess.push(query);
-    this.setState();
+    this.setState({
+      inProcess: this.state.inProcess.add(query)
+    });
   };
 
   /*
@@ -38,42 +48,38 @@ export default class UsersStore extends Store {
           cause right now it looks like a shit.
   */
   handleSuccessSearch({ query, response }) {
-    this._removeFromProcess(query);
-    const { users } = response.entities;
+    const { entities } = response;
     const { result } = response;
-    if (users) {
-      this.state.searched[query] = result;
-    } else {
-      this.state.searched[query] = [];
-    }
+
+    const users = this.state.users.withMutations(map => {
+      Object.keys(entities.users || {}).forEach(id => map.set(Number(id), entities.users[id]));
+    });
+
+    const searched = this.state.searched.set(query, new List(result.map(id => users.get(id))));
+
     this.setState({
-      users: merge(this.state.users, users || {})
+      users,
+      searched,
+      inProcess: this.state.inProcess.delete(query)
     });
   };
 
   handleFailedSearch({ query, err }) {
     console.warn(err);
-    this._removeFromProcess(query);
-    this.setState();
+    this.setState({
+      inProcess: this.state.inProcess.delete(query)
+    });
   };
 
   isInProcess(query) {
-    return this.state.inProcess.indexOf(query) !== -1;
+    return this.state.inProcess.has(query);
   };
 
   isAlreadySearched(query) {
-    return !!this.state.searched[query];
+    return this.state.searched.has(query);
   };
 
   getUsersByQuery(query) {
-    const ids = this.state.searched[query] || [];
-    return ids.map(id => this.state.users[id]);
-  };
-
-  _removeFromProcess(query) {
-    const index = this.state.inProcess.indexOf(query);
-    if (index !== -1) {
-      this.state.inProcess.splice(index, 1);
-    }
+    return this.state.searched.get(query) || new List();
   };
 }
