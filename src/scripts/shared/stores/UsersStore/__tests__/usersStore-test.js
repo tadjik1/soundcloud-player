@@ -57,9 +57,36 @@ describe('users store test cases', () => {
     expect(store.state.inProcess).to.deep.equal(['lala']);
   });
 
+  it('should return true because this request in que', () => {
+    expect(store.isInProcess('lala')).to.equal(true);
+  });
+
   it('should remove request from "inproccess" entity', () => {
     store.handleFailedSearch({query: 'lala'});
 
     expect(store.state.inProcess).to.deep.equal([]);
+  });
+
+
+  describe('success handler logic', () => {
+    before('create success request', () => {
+      store.handleBeginSearch('newQuery');
+      store.handleSuccessSearch({query: 'newQuery', response: {
+        entities: {},
+        result: {}
+      }});
+    });
+
+    it('should remove "inproccess" entity for request', () => {
+      expect(store.isInProcess('newQuery')).to.equal(false);
+    });
+
+    it('should add "searched" entity for request', () => {
+      expect(store.isAlreadySearched('newQuery')).to.equal(true);
+    });
+
+    it('should return empty array of users', () => {
+      expect(store.getUsersByQuery('newQuery')).to.deep.equal([]);
+    });
   });
 });

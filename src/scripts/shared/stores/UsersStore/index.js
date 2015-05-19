@@ -58,7 +58,7 @@ export default class UsersStore extends Store {
   };
 
   isInProcess(query) {
-    return this.state.inProcess.includes(query);
+    return this.state.inProcess.indexOf(query) !== -1;
   };
 
   isAlreadySearched(query) {
