@@ -26,10 +26,6 @@ export default class Search extends Component {
     }
   };
 
-  shouldComponentUpdate({ q }) {
-    return q !== this.state.q;
-  };
-
   render() {
     return (
       <div className="jumbotron search-controls">

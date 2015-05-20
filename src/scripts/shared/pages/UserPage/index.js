@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import FluxComponent from 'flummox/component';
 import DocumentTitle from 'react-document-title';
+import User from '../../components/User';
 
 function pickUserId({ params }) {
   return params.userId;
@@ -28,17 +30,20 @@ export default class UserPage extends Component {
   };
 
   render() {
+    const id = pickUserId(this.props);
     return (
-      <DocumentTitle title="SoundCloud Replica Home">
-        <div className="clearfix">
-          <h1 className="tac title">
-            SoundCloud Replica
-          </h1>
-          <div className="col-md-8 col-md-offset-2 description tac">
-            This is User Page
-          </div>
+      <div className="container-fluid groups">
+        <div className="row">
+          <FluxComponent
+            connectToStores={{
+            users: (store) => ({
+              user: store.getUserById(id)
+            })
+          }}>
+            <User />
+          </FluxComponent>
         </div>
-      </DocumentTitle>
+      </div>
     );
   };
 }
