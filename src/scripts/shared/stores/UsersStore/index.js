@@ -50,14 +50,13 @@ static deserialize(str) {
           cause right now it looks like a shit.
   */
   handleSuccessSearch({ query, response }) {
-    const { entities } = response;
-    const { result } = response;
+    const { entities, result } = response;
 
     const users = this.state.users.withMutations(map => {
-      Object.keys(entities.users || {}).forEach(id => map.set(Number(id), entities.users[id]));
+      Object.keys(entities.users || {}).forEach(id => map.set(id, entities.users[id]));
     });
 
-    const searched = this.state.searched.set(query, new List(result.map(id => users.get(id))));
+    const searched = this.state.searched.set(query, new List(result.map(id => users.get(id.toString()))));
 
     this.setState({
       users,
@@ -70,7 +69,7 @@ static deserialize(str) {
     const { entities } = response;
 
     const users = this.state.users.withMutations(map => {
-      Object.keys(entities.users || {}).forEach(id => map.set(Number(id), entities.users[id]));
+      Object.keys(entities.users || {}).forEach(id => map.set(id, entities.users[id]));
     });
 
     this.setState({
@@ -79,7 +78,7 @@ static deserialize(str) {
   };
 
   handleFailedSearch({ query, err }) {
-    console.warn(err);
+    console.warn('error ', err);
     this.setState({
       inProcess: this.state.inProcess.delete(query)
     });
@@ -98,10 +97,18 @@ static deserialize(str) {
   };
 
   getUserById(userId) {
-    return this.state.users.get(userId);
+    return this.state.users.get(userId) || {};
   };
 
   getUsersByQuery(query) {
     return this.state.searched.get(query) || new List();
+  };
+
+  getFollowers(userId) {
+    return this.state.users.slice(0, 10);
+  };
+
+  getFollowings(userId) {
+    return this.state.users.slice(0, 10);
   };
 }

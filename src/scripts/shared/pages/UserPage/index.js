@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import FluxComponent from 'flummox/component';
 import DocumentTitle from 'react-document-title';
 import User from '../../components/User';
+import Users from '../../components/Users';
 
 function pickUserId({ params }) {
   return params.userId;
 }
 
 export default class UserPage extends Component {
+  static willRender(flux, state) {
+    return flux.getActions('users').fetchUser(pickUserId(state));
+  };
 
   constructor(props) {
     super(props);
@@ -20,30 +24,58 @@ export default class UserPage extends Component {
   };
 
   componentWillMount() {
-    this.doFetchUser(pickUserId(this.props));
+    this.fetchUser(pickUserId(this.props));
   };
 
-  doFetchUser(userId) {
-    if (userId && !this.usersStore.isAlreadyFetched(userId)) {
+  fetchUser(userId) {
+    if (userId && !this.usersStore.getUserById(userId).id) {
       this.usersActions.fetchUser(userId);
     }
   };
 
   render() {
-    const id = pickUserId(this.props);
+    const userId = pickUserId(this.props);
     return (
-      <div className="container-fluid groups">
-        <div className="row">
-          <FluxComponent
-            connectToStores={{
-            users: (store) => ({
-              user: store.getUserById(id)
-            })
-          }}>
-            <User />
-          </FluxComponent>
+      <DocumentTitle title="SoundCloud Replica User">
+        <div className="container-fluid groups">
+          <div className="row">
+            <FluxComponent
+              connectToStores={{
+                users: (store) => ({
+                  user: store.getUserById(userId)
+                })
+              }}>
+              <User />
+            </FluxComponent>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <h1>Followers</h1>
+              <FluxComponent
+                connectToStores={{
+                  users: (store) => ({
+                    users: store.getFollowers(userId)
+                  })
+                }}>
+                <Users />
+              </FluxComponent>
+            </div>
+
+            <div className="col-md-6">
+              <h1>Followings</h1>
+              <FluxComponent
+                connectToStores={{
+                  users: (store) => ({
+                    users: store.getFollowings(userId)
+                  })
+                }}>
+                <Users />
+              </FluxComponent>
+            </div>
+          </div>
         </div>
-      </div>
+      </DocumentTitle>
     );
   };
 }
