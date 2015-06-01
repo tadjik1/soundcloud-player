@@ -8,6 +8,7 @@ module.exports = function (config) {
       'chai',
       'sinon'
     ],
+    captureTimeout: 25000,
     'browsers': ['Firefox'],
     'files': [
       'src/scripts/shared/**/*-test.js'

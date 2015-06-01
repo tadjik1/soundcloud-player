@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FluxComponent from 'flummox/component';
 import DocumentTitle from 'react-document-title';
+import { compact } from 'lodash';
 import User from '../../components/User';
 import Users from '../../components/Users';
 
@@ -21,15 +22,22 @@ export default class UserPage extends Component {
 
     // stores
     this.usersStore = props.flux.getStore('users');
+    this.followersStore = props.flux.getStore('usersFollowers');
   };
 
   componentWillMount() {
-    this.fetchUser(pickUserId(this.props));
+    this.fetchData(pickUserId(this.props));
   };
 
-  fetchUser(userId) {
-    if (userId && !this.usersStore.getUserById(userId).id) {
+  fetchData(userId) {
+    if (!userId) return;
+
+    if (!this.usersStore.get(userId)) {
       this.usersActions.fetchUser(userId);
+    }
+
+    if (!this.followersStore.isAlreadyFetched(userId)) {
+      this.usersActions.fetchFollowers(userId);
     }
   };
 
@@ -42,7 +50,7 @@ export default class UserPage extends Component {
             <FluxComponent
               connectToStores={{
                 users: (store) => ({
-                  user: store.getUserById(userId)
+                  user: store.get(userId)
                 })
               }}>
               <User />
@@ -53,23 +61,12 @@ export default class UserPage extends Component {
             <div className="col-md-6">
               <h1>Followers</h1>
               <FluxComponent
-                connectToStores={{
-                  users: (store) => ({
-                    users: store.getFollowers(userId)
-                  })
-                }}>
-                <Users />
-              </FluxComponent>
-            </div>
-
-            <div className="col-md-6">
-              <h1>Followings</h1>
-              <FluxComponent
-                connectToStores={{
-                  users: (store) => ({
-                    users: store.getFollowings(userId)
-                  })
-                }}>
+                connectToStores={['users', 'usersFollowers']}
+                stateGetter={([usersStore, usersFollowersStore]) => ({
+                  users: compact(usersFollowersStore.getFollowers(userId).map(id => usersStore.get(id))),
+                  isAlreadySearched: usersFollowersStore.isAlreadyFetched(userId),
+                  isInProcess: usersFollowersStore.isInProcess(userId)
+              })}>
                 <Users />
               </FluxComponent>
             </div>
