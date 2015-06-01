@@ -1,4 +1,4 @@
-import { without, has } from 'lodash';
+import { without, has, includes } from 'lodash';
 import { Store } from 'flummox';
 
 export default class UsersSearchStore extends Store {
@@ -35,14 +35,12 @@ export default class UsersSearchStore extends Store {
   };
 
   handleBeginSearch(query) {
-    console.log('begin');
     this.setState({
       inProcess: [].concat(this.state.inProcess, [query])
     });
   };
 
   handleSuccessSearch({ query, response }) {
-    console.log('success');
     const { result } = response;
 
     this.setState({
@@ -59,7 +57,7 @@ export default class UsersSearchStore extends Store {
   };
 
   isInProcess(query) {
-    return has(this.state.inProcess, query);
+    return includes(this.state.inProcess, query);
   };
 
   isAlreadySearched(query) {

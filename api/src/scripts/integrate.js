@@ -14,10 +14,8 @@ SC.initialize(SCInitializeParams);
 fetch('/users.json').then((users) => {
 	return Promise.all([users, fetch('/groups.json')]);
 }).then(([users, groups]) => {
-	console.log(users, groups);
 	return Promise.all([users, groups, fetch('/tracks.json')]);
 }).then(([users, groups, tracks]) => {
-	console.log(users, groups, tracks);
 	return Promise.all([
 		User.create(users),
 		Group.create(groups),
