@@ -5,14 +5,18 @@ import { Flux, Actions } from 'flummox';
 
 class MockUsersActions extends Actions {
   searchUsers(query) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          query,
-          response: {
-            result: [1, 2, 3]
-          }
-        });
+        if (query === 'fail') {
+          reject({ query });
+        } else {
+          resolve({
+            query,
+            response: {
+              result: [1, 2, 3]
+            }
+          });
+        }
       }, 100);
     });
   };
@@ -82,6 +86,18 @@ describe('search users store test cases', () => {
 
   it('should handle success search', () => {
     expect(store.getUsersByQuery('test')).to.deep.equal([1, 2, 3]);
+  });
+
+  it('should ignore failed search in results', async () => {
+    try {
+      await flux.getActions('users').searchUsers('fail');
+    } catch (ignore) {}
+
+    expect(store.isAlreadySearched('fail')).to.equal(false);
+  });
+
+  it('should handle failed search in process', () => {
+    expect(store.isInProcess('fail')).to.equal(false);
   });
 
   it('should return true if we already searched', () => {

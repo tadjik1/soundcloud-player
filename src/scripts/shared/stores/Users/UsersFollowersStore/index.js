@@ -3,15 +3,15 @@ import { has, without, includes } from 'lodash';
 
 export default class usersFollowersStore extends Store {
   constructor(flux) {
-		super();
+    super();
 
-		const usersActions = flux.getActions('users');
+    const usersActions = flux.getActions('users');
 
-		this.registerAsync(usersActions.fetchFollowers,
-		  this.handleBeginFetch,
-		  this.handleSuccessFetch,
-		  this.handleFailedFetch
-		);
+    this.registerAsync(usersActions.fetchFollowers,
+      this.handleBeginFetch,
+      this.handleSuccessFetch,
+      this.handleFailedFetch
+    );
 
     this.state = {
       followers: {},
