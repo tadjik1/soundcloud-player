@@ -10,7 +10,9 @@ import initApp from '../shared/init';
 document.addEventListener('DOMContentLoaded', () => {
   const flux = new Flux();
   if (window.flux) {
-    flux.deserialize(JSON.stringify(window.flux));
+    try {
+      flux.deserialize(JSON.stringify(window.flux));
+    } catch (ignore) {}
   }
   initApp();
 

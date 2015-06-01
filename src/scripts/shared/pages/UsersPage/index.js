@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Flux } from 'flummox';
 import FluxComponent from 'flummox/component';
 import DocumentTitle from 'react-document-title';
+import { compact } from 'lodash';
 import Search from '../../components/Search';
 import Users from '../../components/Users';
 
@@ -10,13 +10,6 @@ function pickQuery(props) {
 }
 
 export default class UsersPage extends Component {
-  static propTypes = {
-    query: PropTypes.shape({
-      q: PropTypes.string
-    }).isRequired,
-    flux: PropTypes.instanceOf(Flux).isRequired
-  };
-
   static contextTypes = {
     router: PropTypes.func.isRequired
   };
@@ -28,11 +21,10 @@ export default class UsersPage extends Component {
   constructor(props) {
     super(props);
 
-    // it's like a decorator for binding context
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    // shortcuts for a stores and action creators
     this.usersStore = props.flux.getStore('users');
+    this.usersSearchStore = props.flux.getStore('usersSearch');
     this.usersActions = props.flux.getActions('users');
   };
 
@@ -45,7 +37,7 @@ export default class UsersPage extends Component {
   };
 
   doSearchUsers(query) {
-    if (query && !this.usersStore.isAlreadySearched(query)) {
+    if (query && !this.usersSearchStore.isAlreadySearched(query)) {
       this.usersActions.searchUsers(query);
     }
   };
@@ -60,37 +52,30 @@ export default class UsersPage extends Component {
     const query = pickQuery(this.props);
     return (
       <DocumentTitle title="SoundCloud Replica Search">
-
         <div className="groups">
-
           <FluxComponent
             q={query}
             handleSubmit={this.handleSubmit}
-            connectToStores={{
-              usersPage: (store) => ({
-                title: store.getTitle(),
-                placeholder: store.getPlaceholder(),
-                action: store.getAction()
-              })
-            }}>
+            connectToStores={'usersPage'}
+            stateGetter={(usersPageStore) => ({
+              title: usersPageStore.getTitle(),
+              placeholder: usersPageStore.getPlaceholder(),
+              action: usersPageStore.getAction()
+          })}>
             <Search />
           </FluxComponent>
 
           <FluxComponent
             q={query}
-            connectToStores={{
-              users: (store, props) => ({
-                users: store.getUsersByQuery(props.q),
-                isAlreadySearched: store.isAlreadySearched(props.q),
-                isInProcess: store.isInProcess(props.q)
-              })
-            }}>
+            connectToStores={['users', 'usersSearch']}
+            stateGetter={([usersStore, usersSearchStore], props) => ({
+              users: compact(usersSearchStore.getUsersByQuery(props.q).map(id => usersStore.get(id))),
+              isAlreadySearched: usersSearchStore.isAlreadySearched(props.q),
+              isInProcess: usersSearchStore.isInProcess(props.q)
+          })}>
             <Users />
-
           </FluxComponent>
-
         </div>
-
       </DocumentTitle>
     );
   };

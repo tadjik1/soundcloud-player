@@ -4,7 +4,7 @@ import User from '../../components/User';
 export default class Users extends Component {
   render() {
     const { q, isInProcess, isAlreadySearched, users } = this.props;
-    const isEmpty = users.size === 0;
+    const isEmpty = users.length === 0;
 
     return (
       <div className="search-results">
