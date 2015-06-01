@@ -1,4 +1,6 @@
-node_modules
-build
-coverage
-.DS_Store
+api/node_modules
+api/dist
+
+client/node_modules/
+client/build
+client/coverage
