@@ -1,6 +1,5 @@
 import { Store } from 'flummox';
 import { has, without, includes } from 'lodash';
-import selectn from 'selectn';
 
 export default class usersFollowersStore extends Store {
   constructor(flux) {
@@ -8,11 +7,11 @@ export default class usersFollowersStore extends Store {
 
 		const usersActions = flux.getActions('users');
 
-    this.registerAsync(usersActions.fetchFollowers,
-      this.handleBeginFetch,
-      this.handleSuccessFetch,
-      this.handleFailedFetch
-    );
+		this.registerAsync(usersActions.fetchFollowers,
+		  this.handleBeginFetch,
+		  this.handleSuccessFetch,
+		  this.handleFailedFetch
+		);
 
     this.state = {
       followers: {},

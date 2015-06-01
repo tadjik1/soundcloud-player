@@ -21,7 +21,7 @@ export default {
   },
 
   fetchFollowers(userId) {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       const promise = SoundCloudSDK.get(`/users/${userId}/followers.json`);
       promise.then(users => resolve({ response: normalizeUserArrayResponse(users), id: userId }));
       promise.catch(err => reject({ err }));
