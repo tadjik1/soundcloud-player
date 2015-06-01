@@ -15,7 +15,7 @@ export default class UsersPage extends Component {
   };
 
   static willRender(flux, state) {
-    return flux.getActions('users').searchUsers(state.query.q);
+    return flux.getActions('users').searchUsers(pickQuery(state));
   };
 
   constructor(props) {

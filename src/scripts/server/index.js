@@ -13,6 +13,7 @@ import DocumentTitle from 'react-document-title';
 import routes from '../shared/routes';
 import Flux from '../shared/Flux';
 import initApp from '../shared/init';
+import htmlEntities from './htmlEntities';
 
 const templateFile = path.join(__dirname, 'views/index-nodejs.html');
 const template = _.template(fs.readFileSync(templateFile, 'utf8'));
@@ -40,32 +41,32 @@ app.use(function* appHandler() {
 
   let html;
 
-  try {
-    const { Handler, state } = yield new Promise((resolve) => {
-      router.run((_Handler, _state) => {
-        resolve({ Handler: _Handler, state: _state });
-      });
+  const { Handler, state } = yield new Promise((resolve) => {
+    router.run((_Handler, _state) => {
+      resolve({ Handler: _Handler, state: _state });
     });
+  });
 
+  try {
     yield state.routes.map((route) => {
-    //  call willRender on all routes to get async data
+      // call willRender on all routes to get async data
       return route.handler.willRender && route.handler.willRender(flux, state);
     }).filter(Boolean);
-
-    html = React.renderToString(
-      <FluxComponent flux={flux}>
-        <Handler {...state} />
-      </FluxComponent>
-    );
-
-    this.body = template({
-      title: DocumentTitle.rewind(),
-      body: html,
-      flux: flux.serialize()
-    });
   } catch (error) {
-    throw error;
+    console.warn(error);
   }
+
+  html = React.renderToString(
+    <FluxComponent flux={flux}>
+      <Handler {...state} />
+    </FluxComponent>
+  );
+
+  this.body = template({
+    title: DocumentTitle.rewind(),
+    body: html,
+    flux: htmlEntities(flux.serialize())
+  });
 });
 
 app.listen(port, () => {

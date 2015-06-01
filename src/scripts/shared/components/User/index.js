@@ -1,15 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 export default class User extends Component {
-  static PropTypes = {
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      avatar_url: PropTypes.string.isRequired,
-      username: PropTypes.string.isRequired
-    }).isRequired
-  };
-
   render() {
     const user = this.props.user;
     return (
