@@ -1,9 +1,7 @@
-/* global describe, it, expect, before */
+/* global describe, it, expect, before, sinon */
 
 import UsersSearchStore from '../index';
-import { Flux, Actions, Store } from 'flummox';
-import { compact } from 'lodash';
-import { normalizeUserArrayResponse } from '../../../../utils/APIUtils/user';
+import { Flux, Actions } from 'flummox';
 
 class MockUsersActions extends Actions {
   searchUsers(query) {
@@ -12,7 +10,7 @@ class MockUsersActions extends Actions {
         resolve({
           query,
           response: {
-            result: [1, 2 ,3]
+            result: [1, 2, 3]
           }
         });
       }, 100);

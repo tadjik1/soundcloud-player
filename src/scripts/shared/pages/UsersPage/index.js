@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import FluxComponent from 'flummox/component';
 import DocumentTitle from 'react-document-title';
+import { compact } from 'lodash';
 import Search from '../../components/Search';
 import Users from '../../components/Users';
 
@@ -68,7 +69,7 @@ export default class UsersPage extends Component {
             q={query}
             connectToStores={['users', 'usersSearch']}
             stateGetter={([usersStore, usersSearchStore], props) => ({
-              users: usersSearchStore.getUsersByQuery(props.q).map(id => usersStore.get(id)),
+              users: compact(usersSearchStore.getUsersByQuery(props.q).map(id => usersStore.get(id))),
               isAlreadySearched: usersSearchStore.isAlreadySearched(props.q),
               isInProcess: usersSearchStore.isInProcess(props.q)
           })}>

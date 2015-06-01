@@ -1,8 +1,7 @@
-/* global describe, it, expect, before */
+/* global describe, it, expect, before, sinon */
 
 import UsersStore from '../index';
 import { Flux, Actions } from 'flummox';
-import { compact } from 'lodash';
 import { normalizeUserArrayResponse } from '../../../../utils/APIUtils/user';
 
 const exampleResponse = [{id: 1, name: 'test'}];
@@ -51,7 +50,7 @@ describe('users store test cases', () => {
   });
 
   it('should contain user with id=1', () => {
-      expect(store.get(1)).to.deep.equal({id: 1, name: 'test'});
+    expect(store.get(1)).to.deep.equal({id: 1, name: 'test'});
   });
 
   it('should merge users', async () => {
