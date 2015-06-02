@@ -13,7 +13,8 @@ export default class UserPage extends Component {
   static willRender(flux, state) {
     return Promise.all([
       flux.getActions('users').fetchUser(pickUserId(state)),
-      flux.getActions('users').fetchFollowers(pickUserId(state))
+      flux.getActions('users').fetchFollowers(pickUserId(state)),
+      flux.getActions('users').fetchFollowings(pickUserId(state))
     ]);
   };
 
