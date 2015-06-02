@@ -3,14 +3,14 @@ import User from '../../components/User';
 
 export default class Users extends Component {
   render() {
-    const { q, isInProcess, isAlreadySearched, users } = this.props;
+    const { q, isInProcess, isAlreadyFetched, users } = this.props;
     const isEmpty = users.length === 0;
 
     return (
       <div className="search-results">
         {users.map(this.renderUser)}
 
-        {isAlreadySearched && isEmpty &&
+        {isAlreadyFetched && isEmpty &&
           <h2>There are no users with {q} name</h2>
         }
 
@@ -18,7 +18,7 @@ export default class Users extends Component {
           <h2>Loading...</h2>
         }
 
-        {!isAlreadySearched && !isInProcess &&
+        {!isAlreadyFetched && !isInProcess &&
           <h2>There will be users</h2>
         }
       </div>
