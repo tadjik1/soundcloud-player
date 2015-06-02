@@ -70,7 +70,7 @@ export default class UsersPage extends Component {
             connectToStores={['users', 'usersSearch']}
             stateGetter={([usersStore, usersSearchStore], props) => ({
               users: compact(usersSearchStore.getUsersByQuery(props.q).map(id => usersStore.get(id))),
-              isAlreadySearched: usersSearchStore.isAlreadySearched(props.q),
+              isAlreadyFetched: usersSearchStore.isAlreadySearched(props.q),
               isInProcess: usersSearchStore.isInProcess(props.q)
           })}>
             <Users />

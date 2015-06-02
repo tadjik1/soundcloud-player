@@ -67,7 +67,7 @@ export default class UserPage extends Component {
                 connectToStores={['users', 'usersFollowers']}
                 stateGetter={([usersStore, usersFollowersStore]) => ({
                   users: compact(usersFollowersStore.getFollowers(userId).map(id => usersStore.get(id))),
-                  isAlreadySearched: usersFollowersStore.isAlreadyFetched(userId),
+                  isAlreadyFetched: usersFollowersStore.isAlreadyFetched(userId),
                   isInProcess: usersFollowersStore.isInProcess(userId)
               })}>
                 <Users />
