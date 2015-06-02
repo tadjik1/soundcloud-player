@@ -26,5 +26,13 @@ export default {
       promise.then(users => resolve({ response: normalizeUserArrayResponse(users), id: userId }));
       promise.catch(err => reject({ err }));
     });
+  },
+
+  fetchFollowings(userId) {
+    return new Promise((resolve, reject) => {
+      const promise = SoundCloudSDK.get(`/users/${userId}/followings.json`);
+      promise.then(users => resolve({ response: normalizeUserArrayResponse(users), id: userId }));
+      promise.catch(err => reject({ err }));
+    });
   }
 };

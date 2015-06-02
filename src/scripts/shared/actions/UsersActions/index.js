@@ -8,7 +8,11 @@ export default class UsersActions extends Actions {
 
   fetchFollowers(id) {
     return UsersAPI.fetchFollowers(id);
-  }
+  };
+
+  fetchFollowings(id) {
+    return UsersAPI.fetchFollowings(id);
+  };
 
   fetchUser(userId) {
     return UsersAPI.fetchUser(userId);
