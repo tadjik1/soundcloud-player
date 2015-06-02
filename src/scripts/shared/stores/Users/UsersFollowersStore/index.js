@@ -21,35 +21,35 @@ export default class usersFollowersStore extends Store {
 
   static serialize(state) {
     return JSON.stringify({
-			followers: state.followers,
-			inProcess: state.inProcess
+      followers: state.followers,
+      inProcess: state.inProcess
     });
   };
 
   static deserialize(str) {
     const state = JSON.parse(str);
     return {
-			followers: state.followers,
-			inProcess: state.inProcess
+      followers: state.followers,
+      inProcess: state.inProcess
     };
   };
 
-	handleBeginFetch(id) {
+  handleBeginFetch(id) {
     this.setState({
       inProcess: [].concat(this.state.inProcess, [id])
     });
   };
 
-	handleSuccessFetch({ id, response }) {
+  handleSuccessFetch({ id, response }) {
     const { result } = response;
 
     this.setState({
-			followers: Object.assign({}, this.state.followers, {[id]: result}),
+      followers: Object.assign({}, this.state.followers, {[id]: result}),
       inProcess: without(this.state.inProcess, id)
     });
   };
 
-	handleFailedFetch({ id, err }) {
+  handleFailedFetch({ id, err }) {
     console.warn(err);
     this.setState({
       inProcess: without(this.state.inProcess, id)
