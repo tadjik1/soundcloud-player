@@ -11,7 +11,10 @@ function pickUserId({ params }) {
 
 export default class UserPage extends Component {
   static willRender(flux, state) {
-    return flux.getActions('users').fetchUser(pickUserId(state));
+    return Promise.all([
+      flux.getActions('users').fetchUser(pickUserId(state)),
+      flux.getActions('users').fetchFollowers(pickUserId(state))
+    ]);
   };
 
   constructor(props) {
