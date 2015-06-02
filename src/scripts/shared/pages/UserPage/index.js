@@ -26,6 +26,7 @@ export default class UserPage extends Component {
     // stores
     this.usersStore = props.flux.getStore('users');
     this.followersStore = props.flux.getStore('usersFollowers');
+    this.followingsStore = props.flux.getStore('usersFollowings');
   };
 
   componentWillMount() {
@@ -41,6 +42,10 @@ export default class UserPage extends Component {
 
     if (!this.followersStore.isAlreadyFetched(userId)) {
       this.usersActions.fetchFollowers(userId);
+    }
+
+    if (!this.followingsStore.isAlreadyFetched(userId)) {
+      this.usersActions.fetchFollowings(userId);
     }
   };
 
@@ -69,6 +74,18 @@ export default class UserPage extends Component {
                   users: compact(usersFollowersStore.getFollowers(userId).map(id => usersStore.get(id))),
                   isAlreadyFetched: usersFollowersStore.isAlreadyFetched(userId),
                   isInProcess: usersFollowersStore.isInProcess(userId)
+              })}>
+                <Users />
+              </FluxComponent>
+            </div>
+            <div className="col-md-6">
+              <h1>Followings</h1>
+              <FluxComponent
+                connectToStores={['users', 'usersFollowings']}
+                stateGetter={([usersStore, usersFollowingsStore]) => ({
+                  users: compact(usersFollowingsStore.getFollowings(userId).map(id => usersStore.get(id))),
+                  isAlreadyFetched: usersFollowingsStore.isAlreadyFetched(userId),
+                  isInProcess: usersFollowingsStore.isInProcess(userId)
               })}>
                 <Users />
               </FluxComponent>
