@@ -3,7 +3,7 @@ import { Flummox } from 'flummox';
 import UsersActions from './actions/UsersActions';
 
 // stores
-import UserStores from './stores/Users';
+import * as UserStores from './stores/Users';
 
 export default class Flux extends Flummox {
   constructor() {

@@ -37,7 +37,7 @@ export default class UsersPage extends Component {
   };
 
   doSearchUsers(query) {
-    if (query && !this.usersSearchStore.isAlreadySearched(query)) {
+    if (!this.usersSearchStore.isAlreadySearched(query)) {
       this.usersActions.searchUsers(query);
     }
   };
